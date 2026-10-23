@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A self-paced eLearning course on finding the correct course ID. Instructional design portfolio sample by Bailey Tucker.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Locating the Correct Course ID</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: Rise-style course shell. Fixed lesson sidebar + one centered reading column of stacked blocks; sidebar becomes a slide-over drawer on phones. */
+:root{
+  --bg:#ffffff; --panel:#f6f5f9; --line:#e2dfea; --fg:#1d1a26; --muted:#5f5a6e;
+  --accent:#5b4a8b; --accent-ink:#ffffff; --accent-soft:#ece8f5;
+  --good:#1f7a4d; --good-soft:#e5f3ec; --bad:#b3261e; --bad-soft:#fbe9e7;
+  --shot:#ffffff;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --side:300px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#16141c; --panel:#1f1c27; --line:#33303f; --fg:#ece9f3; --muted:#a8a2b8;
+  --accent:#a998dc; --accent-ink:#16141c; --accent-soft:#2b2640;
+  --good:#5cc995; --good-soft:#163126; --bad:#f2867c; --bad-soft:#3a1d1b; --shot:#f4f3f7; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#16141c; --panel:#1f1c27; --line:#33303f; --fg:#ece9f3; --muted:#a8a2b8;
+  --accent:#a998dc; --accent-ink:#16141c; --accent-soft:#2b2640;
+  --good:#5cc995; --good-soft:#163126; --bad:#f2867c; --bad-soft:#3a1d1b; --shot:#f4f3f7; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font:400 18px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+p{margin:0}
+.cid{font-family:var(--mono);font-size:.9em;background:var(--accent-soft);color:var(--fg);padding:.05em .4em;border-radius:4px;white-space:nowrap}
+
+/* shell */
+.shell{display:grid;grid-template-columns:var(--side) minmax(0,1fr);min-height:100%}
+aside{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:auto;background:var(--panel);border-right:1px solid var(--line);
+  padding-block:28px 24px;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:22px;display:flex;flex-direction:column;gap:22px}
+.brand small{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+.brand h2{font-size:21px}
+.prog{display:grid;gap:6px;font-size:14px;color:var(--muted)}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+nav ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+nav button{width:100%;text-align:left;background:none;border:0;padding:9px 10px;border-radius:8px;display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;font-size:15.5px;line-height:1.35;color:var(--fg)}
+nav button:hover{background:var(--accent-soft)}
+nav button[aria-current="true"]{background:var(--accent-soft);font-weight:700}
+nav .dot{width:18px;height:18px;margin-top:1px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center}
+nav .done .dot{background:var(--accent);border-color:var(--accent)}
+nav .done .dot::after{content:"";width:8px;height:4px;border:2px solid var(--accent-ink);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+nav .sec{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:14px 10px 4px}
+.foot{margin-top:auto;font-size:13px;color:var(--muted);line-height:1.45}
+
+main{min-width:0}
+.topbar{display:none}
+.lhead{background:var(--accent);color:var(--accent-ink);padding-block:56px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.lhead .in{max-width:760px;margin:0 auto;display:grid;gap:12px}
+.lhead small{font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;opacity:.85}
+.lhead h1{font-size:clamp(32px,4.4vw,48px);font-weight:700}
+.lhead p{font-size:19px;opacity:.92;max-width:60ch}
+.body{padding-block:44px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:760px;margin:0 auto;display:grid;gap:40px}
+.col > p, .tx p{max-width:66ch}
+.tx{display:grid;gap:14px}
+.tx h2{font-size:28px}
+.tx h3{font-size:21px}
+.tx ul,.tx ol{margin:0;padding-left:1.25em;display:grid;gap:6px}
+.note{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:grid;gap:6px;font-size:17px}
+.note b{font-family:var(--display);font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+figure{margin:0;display:grid;gap:8px}
+.shot{background:var(--shot);border:1px solid var(--line);border-radius:10px;padding:10px;overflow:hidden}
+.shot img{display:block;width:100%;height:auto;border-radius:4px}
+figcaption{font-size:14.5px;color:var(--muted)}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:12px 26px;font-weight:700;font-size:16px;letter-spacing:.02em}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent);padding:10px 22px}
+.cont{display:grid;justify-items:center;gap:10px;border-top:1px solid var(--line);padding-top:36px}
+.cont .btn{min-width:min(320px,100%);padding:15px 28px;font-size:17px}
+.cont small{color:var(--muted);font-size:14px}
+
+/* flashcards */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{perspective:900px;border:0;background:none;padding:0;min-height:220px;text-align:left}
+.card .face{position:absolute;inset:0;border-radius:12px;padding:20px;display:grid;align-content:space-between;gap:10px;backface-visibility:hidden;transition:transform .5s}
+.card .inner{position:relative;height:100%;min-height:220px}
+.card .front{background:var(--accent);color:var(--accent-ink)}
+.card .front .n{font-family:var(--display);font-size:44px;line-height:1;opacity:.6}
+.card .front h3{font-size:21px}
+.card .back{background:var(--panel);border:1px solid var(--line);transform:rotateY(180deg);font-size:16px;line-height:1.5}
+.card .hint{font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;opacity:.8}
+.card.flip .front{transform:rotateY(-180deg)}
+.card.flip .back{transform:rotateY(0)}
+
+/* accordion & tabs */
+.acc{border-top:1px solid var(--line)}
+.acc details{border-bottom:1px solid var(--line)}
+.acc summary{list-style:none;cursor:pointer;padding:16px 4px;font-weight:700;display:flex;justify-content:space-between;gap:12px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+";font-family:var(--display);font-size:24px;line-height:1;color:var(--accent)}
+.acc details[open] summary::after{content:"\2212"}
+.acc .ab{padding:0 4px 18px;display:grid;gap:10px}
+.tabs .tl{display:flex;gap:4px;border-bottom:2px solid var(--line);overflow-x:auto}
+.tabs .tl button{background:none;border:0;padding:12px 18px;font-weight:700;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.tabs .tl button[aria-selected="true"]{color:var(--accent);border-color:var(--accent)}
+.tabs .tp{padding-top:20px;display:grid;gap:14px}
+
+/* process */
+.proc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px;display:grid;gap:18px}
+.proc .ptop{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:var(--muted);font-weight:600}
+.proc .pips{display:flex;gap:6px}
+.proc .pips i{width:26px;height:5px;border-radius:3px;background:var(--line)}
+.proc .pips i.on{background:var(--accent)}
+.proc h3{font-size:22px}
+.proc .pb{display:grid;gap:12px;min-height:120px}
+.proc .pnav{display:flex;justify-content:space-between;gap:12px}
+
+/* video */
+.video{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--shot)}
+.video img{display:block;width:100%;max-height:340px;object-fit:cover;object-position:top;filter:blur(1.5px) saturate(.6);opacity:.55}
+.video .ov{position:absolute;inset:0;display:grid;place-items:center;padding:16px}
+.video .vc{background:rgba(29,26,38,.9);color:#fff;border-radius:12px;padding:18px 22px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;max-width:460px}
+.video .play{width:52px;height:52px;border-radius:50%;background:#fff;display:grid;place-items:center}
+.video .play::after{content:"";border-left:16px solid #5b4a8b;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+.video .vc b{font-family:var(--display);font-size:18px;display:block}
+.video .vc div span{font-size:14px;opacity:.8;line-height:1.4;display:block}
+
+/* knowledge check */
+.kc{border:2px solid var(--accent);border-radius:14px;padding:26px;display:grid;gap:16px}
+.kc .eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--accent)}
+.kc .q{font-size:20px;font-weight:600;line-height:1.4}
+.opts{display:grid;gap:10px}
+.opt{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:center;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:12px 16px}
+.opt:hover{border-color:var(--accent)}
+.opt .r{width:20px;height:20px;border-radius:50%;border:2px solid var(--muted)}
+.opt[aria-checked="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.opt[aria-checked="true"] .r{border:6px solid var(--accent)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt:disabled{cursor:default}
+.fb{border-radius:10px;padding:16px 18px;display:grid;gap:6px}
+.fb.ok{background:var(--good-soft);border-left:5px solid var(--good)}
+.fb.no{background:var(--bad-soft);border-left:5px solid var(--bad)}
+.fb b{font-family:var(--display);font-size:18px}
+.ex{display:grid;gap:8px}
+.ex > span{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:15.5px;font-variant-numeric:tabular-nums}
+th{background:var(--panel);text-align:left;padding:10px 12px;font-weight:700;white-space:nowrap}
+td{padding:9px 12px;border-top:1px solid var(--line)}
+td.m{font-family:var(--mono);font-size:14.5px}
+
+/* cover */
+.cover .lhead{padding-block:84px 72px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.fact{border-top:3px solid var(--accent);padding-top:12px;display:grid;gap:2px}
+.fact b{font-family:var(--display);font-size:26px}
+.fact span{color:var(--muted);font-size:15px}
+.map{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:m}
+.map li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:10px}
+.map li::before{counter-increment:m;content:counter(m);font-family:var(--display);font-weight:700;font-size:22px;color:var(--accent);text-align:center}
+
+/* quiz */
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--muted);font-size:14px;font-weight:600}
+.score{display:grid;justify-items:center;text-align:center;gap:12px;padding:20px 0}
+.ring{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--accent) calc(var(--p)*1%), var(--line) 0)}
+.ring b{width:118px;height:118px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-family:var(--display);font-size:38px}
+.objres{width:100%;display:grid;gap:8px;text-align:left}
+.objres div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:8px 2px;font-size:16px}
+
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  aside{position:fixed;inset:0 auto 0 0;width:min(320px,86vw);height:100%;z-index:40;transform:translateX(-102%);transition:transform .25s;box-shadow:0 0 40px rgba(0,0,0,.25);padding-top:calc(24px + env(safe-area-inset-top,0px))}
+  body.menu aside{transform:none}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:35}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));font-size:15px;font-weight:700}
+  .topbar button{background:var(--accent-soft);border:0;border-radius:8px;padding:8px 14px;font-weight:700}
+  .cards,.facts{grid-template-columns:minmax(0,1fr)}
+  .card,.card .inner{min-height:190px}
+  .lhead{padding-block:40px 34px}
+  body{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="shell">
+  <aside id="side" aria-label="Course outline">
+    <div class="brand"><small>Self-paced course · 15–20 min</small><h2>Locating the Correct Course ID</h2></div>
+    <div class="prog"><span id="progtxt">0% complete</span><div class="bar"><i id="progbar"></i></div></div>
+    <nav><ol id="nav"></ol></nav>
+    <div class="foot"><a href="../" style="color:var(--accent);font-weight:700;text-decoration:none">&larr; Back to portfolio</a><br><br>Portfolio sample by Bailey Tucker. Organization details removed; every system screen is a mock-up with fictional data.</div>
+  </aside>
+  <main>
+    <div class="topbar"><span id="tbtitle">Locating the Correct Course ID</span><button id="menubtn" aria-controls="side" aria-expanded="false">Lessons</button></div>
+    <div id="view"></div>
+  </main>
+</div>
+
+<script>
+const IMG = n => `img/${n}.webp`;
+const C = s => `<span class="cid">${s}</span>`;
+
+const LESSONS = [
+ {id:'welcome', sec:'Start here', title:'Welcome', kicker:'Course overview',
+  sub:'Every alignment and gap-filling project starts with one number. Learn to pick the right one every time.', cover:true, blocks:[
+  {t:'facts', items:[['150,000+','course records in the catalog'],['~30%','of tasks started in the wrong course last sprint'],['15–20 min','to complete this course']]},
+  {t:'text', html:`<h2>Why this matters</h2><p>Each course has a unique Course Identification Number (CID). Some courses are built for one state, others are shared across many locations, and CIDs can change from one school year to the next.</p><p>Pick the wrong CID and an alignment has to be redone or fails review. On a gap-filling project, your edits land in a live course that students and teachers are using, while the course you meant to fix stays unchanged.</p>`},
+  {t:'text', html:`<h2>What you'll be able to do</h2><ol><li>Identify the three items on the CID Checklist.</li><li>Find the correct CID in a Course Manager search.</li><li>Tell base courses from linked courses in Course Manager results.</li><li>Find the correct CID in a Course Metadata Report.</li><li>Tell base courses from linked courses in a Course Metadata Report.</li></ol>`},
+  {t:'note', title:'Before you start', html:`This course assumes you can already log in to the course system, move around it, and run searches and reports with your account permissions.`},
+ ]},
+ {id:'map', sec:'Start here', title:'How this course works', kicker:'Course map',
+  sub:'Five short topics. Each one teaches a step, shows it in a demo, then lets you try it.', blocks:[
+  {t:'text', html:`<p>The topics build on each other. The checklist comes first because you'll use it in every search. Then you'll practice the same pattern twice: first in the simpler Course Manager, then in the larger Course Metadata Report.</p>`},
+  {t:'map', items:['The CID Checklist','Locate a CID in Course Manager','Base vs. linked courses in Course Manager','Locate a CID in a Course Metadata Report','Base vs. linked courses in a Course Metadata Report']},
+  {t:'note', title:'Getting around', html:`Use the lesson list to jump to any topic or come back later for a refresher. Each topic ends with a practice question that gives you feedback right away. When you finish all five, take the 10-question posttest.`},
+ ]},
+ {id:'checklist', sec:'Topics', title:'The CID Checklist', kicker:'Topic 1',
+  sub:'Answer three questions before you search. They tell you exactly which record to look for.', blocks:[
+  {t:'text', html:`<p>Most wrong-CID mistakes happen before the search starts, when someone types a course name and grabs the first match. The checklist makes you decide what you need first.</p><p><strong>Select each card</strong> to see what to ask and why.</p>`},
+  {t:'cards', items:[
+    ['1','School year','Is the work for the current school year or an upcoming one? CIDs can change between years, so a correct CID for 22/23 may be wrong for 23/24.'],
+    ['2','Content','Where does the course content come from: company-built, vendor, legacy, or new curriculum? This tells you which family of courses to search.'],
+    ['3','Base or linked','Does the project need the base course, a linked school copy, or a state-specific base course? Editing the wrong one changes the wrong students’ course.']]},
+  {t:'kc', id:'k1', q:'Which list matches the CID Checklist?', opts:['School year, content, and new course','School year, content, and retired course','School year, content, and base or linked course','Imported, content, and base or linked course'], a:2,
+   ok:'The checklist covers school year, content source, and whether you need a base or linked course.', no:'Look at the three cards again. One item is about how a course relates to its copies.'},
+ ]},
+ {id:'cm-locate', sec:'Topics', title:'Locate a CID in Course Manager', kicker:'Topic 2',
+  sub:'Set the search up correctly and the right record is easy to spot.', blocks:[
+  {t:'text', html:`<p>Course Manager searches the full catalog. Most mistakes come from fields that were changed when they should have been left alone. Step through the search fields below.</p>`},
+  {t:'process', steps:[
+    ['Search Text','Enter all or part of the course name or display name. It works like any search bar.'],
+    ['Curriculum and Subject Area','Leave both set to <strong>Any</strong>. Narrowing them can quietly filter out the course you need if it’s tagged differently than you expect.'],
+    ['School Year','Choose the year from your checklist. Select more than one year if you need to compare.'],
+    ['Include Linked Courses?','Check this box so linked school copies appear alongside their base courses.'],
+    ['Managed At','Always leave this at the organization root. Any other setting searches the wrong catalog.'],
+    ['Available At','<strong>Any location</strong> returns every course for the year. <strong>Specific location</strong> narrows to one school. Courses are tagged to schools, not states, so expand the location tree and pick the school.']]},
+  {t:'img', src:'cm_form', alt:'Course Manager search form with Math 6, 2022-2023, linked courses included, and Virtual School 07 selected', cap:'A completed Course Manager search (mock-up).'},
+  {t:'video', poster:'cm_math6_full', title:'Watch: finding a CID in Course Manager', dur:'2:42'},
+  {t:'kc', id:'k2', q:`Using the results below, which CID is correct for the 23/24 American Government course for Nevada?`, ex:{img:'cm_amgov', label:'Course Manager results: American Government, 2023-2024'}, opts:['140998','141123','156743','121311'], mono:true, a:0,
+   ok:`${C('140998')} is the 23/24 American Government course tagged to Nevada. ${C('141123')} is the Arkansas version.`, no:'Scan the Name column for the Nevada (NV) version of the course.'},
+ ]},
+ {id:'cm-base', sec:'Topics', title:'Base vs. linked courses in Course Manager', kicker:'Topic 3',
+  sub:'One column tells you whether you’re looking at the original or a copy.', blocks:[
+  {t:'text', html:`<p>A <strong>base course</strong> is the original. A <strong>linked course</strong> is a copy made for a specific school that stays connected to its base. Changes to a base course can flow to every linked copy, so knowing which is which matters.</p>`},
+  {t:'tabs', items:[
+    ['Base courses', `<p>If the <strong>Base Course ID</strong> column is <strong>blank</strong>, the course is a base course.</p>`, 'cm_math6_base', 'Base courses 789, 901, 432, and 678 have no Base Course ID'],
+    ['Linked courses', `<p>If the <strong>Base Course ID</strong> column shows a CID, the course is <strong>linked</strong> to that base course.</p>`, 'cm_math6_linked', 'Linked courses 345 and 456 point to base courses 789 and 901']]},
+  {t:'video', poster:'cm_amgov', title:'Watch: reading base and linked courses', dur:'0:52'},
+  {t:'kc', id:'k3', q:'Using the results below, which CID is the national base course for 23/24 American Government?', ex:{img:'cm_amgov', label:'Course Manager results: American Government, 2023-2024'}, opts:['140627','141123','156743','121311'], mono:true, a:0,
+   ok:`${C('140627')} has no Base Course ID, and the school copies of 23/24 American Government all point back to it.`, no:'Find the row whose Base Course ID is blank that the school copies point back to.'},
+ ]},
+ {id:'cmr-locate', sec:'Topics', title:'Locate a CID in a Course Metadata Report', kicker:'Topic 4',
+  sub:'When you need many courses at once, run a report and filter it.', blocks:[
+  {t:'text', html:`<p>A Course Metadata Report (CMR) exports course records to a spreadsheet. It’s the faster route when you need to compare many courses or locations.</p>`},
+  {t:'acc', items:[
+    ['Full report', `<p>Set <strong>Available At</strong> to <strong>Any location</strong> to pull every active course at every location for the years you choose. Use it when you’re not sure where a course is offered.</p>`],
+    ['Specific-location report', `<p>Choose <strong>Specific location</strong> and select schools to pull only their courses. Use it when your project covers known schools and you want a smaller file.</p>`]]},
+  {t:'process', steps:[
+    ['School Year(s)','Check every school year you need.'],
+    ['Output Type','Leave as <strong>Generate report in Excel</strong>. The inline option adds rich-text and cost data you don’t need for this task.'],
+    ['Managed At','Leave at the organization root. The report won’t run otherwise.'],
+    ['Available At','Pick <strong>Any location</strong> or a specific location, as decided above.'],
+    ['Generate Report','Select <strong>Generate Report</strong> and open the spreadsheet when it’s ready.']]},
+  {t:'img', src:'cmr_form_gen', alt:'Course Metadata Report settings with 2023-2024 selected and Generate Report highlighted', cap:'Course Metadata Report settings (mock-up).'},
+  {t:'text', html:`<h3>Filter the spreadsheet</h3><p>Turn on filters in the header row, then narrow by <strong>location</strong>, <strong>school year</strong>, <strong>subject</strong>, and <strong>grade</strong> until only the candidates are left. Check them against your checklist.</p>`},
+  {t:'video', poster:'cmr_geo', title:'Watch: running and filtering a report', dur:'1:58'},
+  {t:'kc', id:'k4', q:'Using the filtered report below, which CID is correct for the 23/24 Economics course for Colorado?', ex:{table:{head:['Course ID','Name','Base Course ID','Management Description'], rows:[['110998','23/24 Economics (NV)','','Standard C, Standard M, NV'],['117486','23/24 Economics (CO)','','Standard C, Standard M, CO'],['116743','23/24 Economics','','Standard C, Standard M, National'],['121311','23/24 Economics','116743','Standard C, Standard M, School 04']]}, label:'Course Metadata Report extract, filtered to Economics'}, opts:['110998','117486','116743','121311'], mono:true, a:1,
+   ok:`${C('117486')} is the 23/24 Economics course tagged to Colorado.`, no:'Look for the Colorado (CO) version in the Name and Management Description columns.'},
+ ]},
+ {id:'cmr-base', sec:'Topics', title:'Base vs. linked courses in a report', kicker:'Topic 5',
+  sub:'The same rule works in the spreadsheet: check the Base Course ID column.', blocks:[
+  {t:'text', html:`<ul><li>If the <strong>Base Course ID</strong> cell is <strong>blank</strong>, the course is a base course.</li><li>If it shows a CID, the course is <strong>linked</strong> to that base course.</li></ul>`},
+  {t:'img', src:'cmr_tx', alt:'Report rows: 583 and 584 are base courses; 587 and 586 are linked to them; 765 and 894 are base courses; 905 links to 765', cap:`In this extract, ${C('587')} links to ${C('583')}, and ${C('586')} links to ${C('584')} (mock-up).`},
+  {t:'video', poster:'cmr_tx', title:'Watch: spotting base and linked courses in a report', dur:'0:43'},
+  {t:'kc', id:'k5', q:'Using the report below, which CID is the national base course for 23/24 Geography and Society?', ex:{img:'cmr_geo', label:'Course Metadata Report extract: Geography and Society'}, opts:['121311','141123','156743','149418'], mono:true, a:3,
+   ok:`${C('149418')} has a blank Base Course ID, and every school copy of 23/24 Geography and Society points to it.`, no:'Find the Base Course ID that repeats down the school copies, then find the row it points to.'},
+ ]},
+ {id:'posttest', sec:'Finish', title:'Posttest', kicker:'Check your learning',
+  sub:'Ten questions, two for each objective. You’ll see your score and which topics to review.', quiz:true, blocks:[]},
+];
+
+const QUIZ = [
+ {o:1, q:'Which characteristic is NOT part of the CID Checklist?', opts:['School year','Content','Base or linked course','Retired status'], a:3},
+ {o:1, q:'True or false: Course content is one of the characteristics on the CID Checklist.', opts:['True','False'], a:0},
+ {o:2, q:'Using Exhibit 1, which CID is correct for the 22/23 Math 6 A course at Virtual School 07?', ex:'cm_math6_full', exl:'Exhibit 1: Course Manager results, Math 6', opts:['345','456','432','678'], a:2, mono:true},
+ {o:2, q:'Using Exhibit 3, which CID is correct for the 23/24 American Government course for Arkansas?', ex:'cm_amgov', exl:'Exhibit 3: Course Manager results, American Government', opts:['134567','141123','156743','121311'], a:1, mono:true},
+ {o:3, q:'Using Exhibit 1, which two courses are linked courses?', ex:'cm_math6_full', exl:'Exhibit 1: Course Manager results, Math 6', opts:['345 and 456','789 and 432','432 and 678','789 and 901'], a:0, mono:true},
+ {o:3, q:'True or false: A course with a CID in the Base Course ID column is a base course.', opts:['True','False'], a:1},
+ {o:4, q:'Using Exhibit 4, which CID is correct for the 23/24 Geography and Society course for Utah?', ex:'cmr_geo', exl:'Exhibit 4: Course Metadata Report, Geography and Society', opts:['141140','114504','154672','140347'], a:0, mono:true},
+ {o:4, q:'Using Exhibit 2, which CIDs are the 22/23 Texas State History 7 A and B base courses?', ex:'cmr_tx', exl:'Exhibit 2: Course Metadata Report, state history', opts:['905 and 765','587 and 586','905 and 894','583 and 584'], a:3, mono:true},
+ {o:5, q:'True or false: If the Base Course ID column is blank, the course is a base course.', opts:['True','False'], a:0},
+ {o:5, q:'Using Exhibit 2, which course is NOT a linked course?', ex:'cmr_tx', exl:'Exhibit 2: Course Metadata Report, state history', opts:['905','894','586','587'], a:1, mono:true},
+];
+const OBJ = {1:'The CID Checklist',2:'Locate a CID in Course Manager',3:'Base vs. linked in Course Manager',4:'Locate a CID in a report',5:'Base vs. linked in a report'};
+
+// ---------- state ----------
+let S = {cur:0, seen:{}, kc:{}, quiz:null};
+try{ const s = JSON.parse(localStorage.getItem('cidcourse')||'null'); if(s) S = Object.assign(S,s); }catch(e){}
+const save = () => { try{ localStorage.setItem('cidcourse', JSON.stringify(S)); }catch(e){} };
+const done = i => { const L = LESSONS[i]; if(L.quiz) return !!(S.quiz && S.quiz.finished); const k = L.blocks.filter(b=>b.t==='kc'); return k.length ? k.every(b=>S.kc[b.id]) : !!S.seen[L.id]; };
+
+function renderNav(){
+  const nav = document.getElementById('nav'); let html='', sec='';
+  LESSONS.forEach((L,i)=>{ if(L.sec!==sec){ sec=L.sec; html+=`<li class="sec">${sec}</li>`; }
+    html+=`<li class="${done(i)?'done':''}"><button data-go="${i}" aria-current="${i===S.cur}"><span class="dot"></span><span>${L.title}</span></button></li>`; });
+  nav.innerHTML = html;
+  const pct = Math.round(LESSONS.filter((_,i)=>done(i)).length / LESSONS.length * 100);
+  document.getElementById('progtxt').textContent = `${pct}% complete`;
+  document.getElementById('progbar').style.width = pct+'%';
+}
+
+const opt = (txt,i,mono) => `<button class="opt" role="radio" aria-checked="false" data-i="${i}"><span class="r"></span><span>${mono?C(txt):txt}</span></button>`;
+function exhibit(ex){
+  if(!ex) return '';
+  if(ex.table) return `<div class="ex"><span>${ex.label}</span><div class="tw"><table><tr>${ex.table.head.map(h=>`<th>${h}</th>`).join('')}</tr>${ex.table.rows.map(r=>`<tr>${r.map((c,j)=>`<td class="${j!==1&&j!==3?'m':''}">${c}</td>`).join('')}</tr>`).join('')}</table></div></div>`;
+  return `<div class="ex"><span>${ex.label}</span><div class="shot"><img src="${IMG(ex.img)}" alt="${ex.label} (mock-up with fictional data)" loading="lazy"></div></div>`;
+}
+
+function block(b){
+  switch(b.t){
+   case 'text': return `<div class="tx">${b.html}</div>`;
+   case 'note': return `<div class="note"><b>${b.title}</b><div>${b.html}</div></div>`;
+   case 'facts': return `<div class="facts">${b.items.map(([n,l])=>`<div class="fact"><b>${n}</b><span>${l}</span></div>`).join('')}</div>`;
+   case 'map': return `<ol class="map">${b.items.map(t=>`<li>${t}</li>`).join('')}</ol>`;
+   case 'img': return `<figure><div class="shot"><img src="${IMG(b.src)}" alt="${b.alt}" loading="lazy"></div><figcaption>${b.cap}</figcaption></figure>`;
+   case 'cards': return `<div class="cards">${b.items.map(([n,h,back])=>`<button class="card" aria-pressed="false"><div class="inner"><div class="face front"><span class="n">${n}</span><h3>${h}</h3><span class="hint">Select to flip</span></div><div class="face back"><p>${back}</p><span class="hint">Select to flip back</span></div></div></button>`).join('')}</div>`;
+   case 'acc': return `<div class="acc">${b.items.map(([t,h])=>`<details><summary>${t}</summary><div class="ab">${h}</div></details>`).join('')}</div>`;
+   case 'tabs': return `<div class="tabs"><div class="tl" role="tablist">${b.items.map(([t],i)=>`<button role="tab" aria-selected="${i===0}" data-tab="${i}">${t}</button>`).join('')}</div>${b.items.map(([t,h,img,alt],i)=>`<div class="tp" role="tabpanel" ${i?'hidden':''}>${h}<div class="shot"><img src="${IMG(img)}" alt="${alt} (mock-up)" loading="lazy"></div></div>`).join('')}</div>`;
+   case 'process': return `<div class="proc" data-step="0" data-steps='${JSON.stringify(b.steps).replace(/'/g,"&#39;")}'></div>`;
+   case 'video': return `<div class="video"><img src="${IMG(b.poster)}" alt="" loading="lazy"><div class="ov"><div class="vc"><i class="play" aria-hidden="true"></i><div><b>${b.title} (${b.dur})</b><span>Narrated screencast. The recording was made in a proprietary system, so it's not included in this portfolio version.</span></div></div></div></div>`;
+   case 'kc': { const st = S.kc[b.id];
+     return `<div class="kc" data-kc="${b.id}"><span class="eyebrow">Knowledge check</span><p class="q">${b.q}</p>${exhibit(b.ex)}<div class="opts" role="radiogroup">${b.opts.map((o,i)=>opt(o,i,b.mono)).join('')}</div><div class="btnrow"><button class="btn" data-submit disabled>Submit</button></div><div class="fbx"></div></div>`; }
+  }
+  return '';
+}
+
+function renderProc(el){
+  const steps = JSON.parse(el.dataset.steps), i = +el.dataset.step;
+  el.innerHTML = `<div class="ptop"><span>Step ${i+1} of ${steps.length}</span><span class="pips">${steps.map((_,j)=>`<i class="${j<=i?'on':''}"></i>`).join('')}</span></div><div class="pb"><h3>${steps[i][0]}</h3><p>${steps[i][1]}</p></div><div class="pnav"><button class="btn ghost" data-pp ${i===0?'disabled':''}>Back</button><button class="btn" data-pn ${i===steps.length-1?'disabled':''}>Next step</button></div>`;
+}
+
+function renderLesson(){
+  const L = LESSONS[S.cur], v = document.getElementById('view');
+  const next = LESSONS[S.cur+1];
+  let html = `<section class="${L.cover?'cover':''}"><header class="lhead"><div class="in"><small>${L.kicker}</small><h1>${L.title}</h1><p>${L.sub}</p></div></header><div class="body"><div class="col">`;
+  if(L.quiz) html += `<div id="quiz"></div>`;
+  else html += L.blocks.map(block).join('');
+  if(!L.quiz) html += `<div class="cont"><button class="btn" data-go="${S.cur+1}">${L.cover?'Start course':'Continue'}</button><small>Next: ${next.title}</small></div>`;
+  html += `</div></div></section>`;
+  v.innerHTML = html;
+  v.querySelectorAll('.proc').forEach(renderProc);
+  // restore answered knowledge checks
+  L.blocks.filter(b=>b.t==='kc' && S.kc[b.id]).forEach(b=>{ const el=v.querySelector(`[data-kc="${b.id}"]`); grade(el,b,b.a,true); });
+  if(L.quiz) renderQuiz();
+  if(!L.blocks.some(b=>b.t==='kc') && !L.quiz){ S.seen[L.id]=1; }
+  document.getElementById('tbtitle').textContent = L.title;
+  save(); renderNav();
+}
+
+function grade(el,b,choice,silent){
+  const right = choice===b.a; const btns = el.querySelectorAll('.opt');
+  btns.forEach((x,i)=>{ x.disabled = right; x.setAttribute('aria-checked', i===choice); x.classList.toggle('right', right && i===b.a); x.classList.toggle('wrong', !right && i===choice); });
+  el.querySelector('[data-submit]').disabled = true;
+  el.querySelector('[data-submit]').textContent = right ? 'Answered' : 'Submit';
+  el.querySelector('.fbx').innerHTML = right ? `<div class="fb ok" role="status"><b>Correct</b><p>${b.ok}</p></div>` : `<div class="fb no" role="status"><b>Not quite. Try again.</b><p>${b.no}</p></div>`;
+  if(right && !silent){ S.kc[b.id]=1; save(); renderNav(); }
+}
+
+// ---------- quiz ----------
+function renderQuiz(){
+  const box = document.getElementById('quiz'); const q = S.quiz;
+  if(!q){ box.innerHTML = `<div class="tx"><p>You'll answer one question at a time and see feedback after each. Some questions refer to an exhibit shown with the question.</p></div><div class="btnrow"><button class="btn" data-qstart>Start posttest</button></div>`; return; }
+  if(q.finished){
+    const score = q.ans.filter((a,i)=>a===QUIZ[i].a).length, pct = Math.round(score/QUIZ.length*100);
+    const by = Object.keys(OBJ).map(o=>{ const it = QUIZ.map((x,i)=>[x,i]).filter(([x])=>x.o==o); const c = it.filter(([x,i])=>q.ans[i]===x.a).length; return `<div><span>${o}. ${OBJ[o]}</span><b>${c} / ${it.length}</b></div>`; }).join('');
+    box.innerHTML = `<div class="score"><div class="ring" style="--p:${pct}"><b>${pct}%</b></div><h2>${pct===100?'Course complete':'Posttest complete'}</h2><p>You answered ${score} of ${QUIZ.length} correctly. ${pct===100?'You met every objective.':'Review the topics below where you missed a question, then retake the test.'}</p><div class="objres">${by}</div><div class="btnrow"><button class="btn ghost" data-qstart>Retake posttest</button></div></div>
+      <div class="note"><b>Keep this checklist</b><div>Before every search: <strong>1.</strong> Which school year? <strong>2.</strong> What content source? <strong>3.</strong> Base course or linked course?</div></div>`;
+    return;
+  }
+  const i = q.i, it = QUIZ[i], ans = q.ans[i];
+  box.innerHTML = `<div class="kc" data-quiz><div class="qhead"><span>Question ${i+1} of ${QUIZ.length}</span><span>Objective ${it.o}</span></div><p class="q">${it.q}</p>${it.ex?exhibit({img:it.ex,label:it.exl}):''}<div class="opts" role="radiogroup">${it.opts.map((o,j)=>opt(o,j,it.mono)).join('')}</div><div class="btnrow"><button class="btn" data-qsubmit disabled>Submit</button></div><div class="fbx"></div></div>`;
+  if(ans!==undefined) showQ(ans);
+}
+function showQ(choice){
+  const q=S.quiz, it=QUIZ[q.i], el=document.querySelector('[data-quiz]'), right = choice===it.a;
+  el.querySelectorAll('.opt').forEach((x,j)=>{ x.disabled=true; x.setAttribute('aria-checked', j===choice); x.classList.toggle('right', j===it.a); x.classList.toggle('wrong', !right && j===choice); });
+  const last = q.i===QUIZ.length-1;
+  el.querySelector('.btnrow').innerHTML = `<button class="btn" data-qnext>${last?'See results':'Next question'}</button>`;
+  el.querySelector('.fbx').innerHTML = right ? `<div class="fb ok" role="status"><b>Correct</b></div>` : `<div class="fb no" role="status"><b>Incorrect</b><p>The correct answer is ${it.mono?C(it.opts[it.a]):it.opts[it.a]}. Review Topic ${it.o}.</p></div>`;
+}
+
+// ---------- events ----------
+document.addEventListener('click', e=>{
+  const t = e.target.closest('button, summary'); if(!t) return;
+  if(t.dataset.go!==undefined){ S.cur=+t.dataset.go; document.body.classList.remove('menu'); closeMenu(); renderLesson(); window.scrollTo(0,0); try{history.replaceState(null,'','#'+LESSONS[S.cur].id);}catch(_){} return; }
+  if(t.classList.contains('card')){ t.classList.toggle('flip'); t.setAttribute('aria-pressed', t.classList.contains('flip')); return; }
+  if(t.getAttribute('role')==='tab'){ const w=t.closest('.tabs'); w.querySelectorAll('[role=tab]').forEach((b,i)=>{b.setAttribute('aria-selected', b===t); w.querySelectorAll('[role=tabpanel]')[i].hidden = b!==t;}); return; }
+  if(t.dataset.pn!==undefined || t.dataset.pp!==undefined){ const p=t.closest('.proc'); p.dataset.step = +p.dataset.step + (t.dataset.pn!==undefined?1:-1); renderProc(p); return; }
+  if(t.classList.contains('opt') && !t.disabled){ const g=t.closest('.kc'); g.querySelectorAll('.opt').forEach(x=>{x.setAttribute('aria-checked', x===t); x.classList.remove('wrong');}); const s=g.querySelector('[data-submit],[data-qsubmit]'); if(s){ s.disabled=false; s.textContent='Submit'; } return; }
+  if(t.dataset.submit!==undefined){ const g=t.closest('.kc'), b=LESSONS[S.cur].blocks.find(x=>x.id===g.dataset.kc); const c=[...g.querySelectorAll('.opt')].findIndex(x=>x.getAttribute('aria-checked')==='true'); grade(g,b,c); return; }
+  if(t.dataset.qstart!==undefined){ S.quiz={i:0,ans:[],finished:false}; save(); renderQuiz(); renderNav(); return; }
+  if(t.dataset.qsubmit!==undefined){ const c=[...document.querySelectorAll('[data-quiz] .opt')].findIndex(x=>x.getAttribute('aria-checked')==='true'); S.quiz.ans[S.quiz.i]=c; save(); showQ(c); return; }
+  if(t.dataset.qnext!==undefined){ if(S.quiz.i===QUIZ.length-1) S.quiz.finished=true; else S.quiz.i++; save(); renderQuiz(); renderNav(); document.getElementById('quiz').scrollIntoView({block:'start'}); return; }
+});
+const menubtn = document.getElementById('menubtn');
+let scrim=null;
+function closeMenu(){ document.body.classList.remove('menu'); menubtn.setAttribute('aria-expanded','false'); if(scrim){scrim.remove(); scrim=null;} }
+menubtn.addEventListener('click',()=>{ if(document.body.classList.contains('menu')) return closeMenu(); document.body.classList.add('menu'); menubtn.setAttribute('aria-expanded','true'); scrim=document.createElement('div'); scrim.className='scrim'; scrim.onclick=closeMenu; document.body.appendChild(scrim); });
+
+const h = (location.hash||'').slice(1); const hi = LESSONS.findIndex(L=>L.id===h); if(hi>=0) S.cur=hi;
+if(S.cur>=LESSONS.length) S.cur=0;
+renderLesson();
+</script>
+
+</body>
+</html>
