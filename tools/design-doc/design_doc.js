@@ -12,6 +12,18 @@ const path = require('path');
 const M = path.join(__dirname, '../mockups/out/'), B = path.join(__dirname, 'out/');
 fs.mkdirSync(B, { recursive: true });
 
+const ALT = {
+  'fig_likert.png': 'Bar charts of survey questions 3 to 5 (n = 6). Confidence locating CIDs: one response each at 1, 2, 4 and 5, two at 3. Training would help: one each at 2 and 3, two each at 4 and 5. Willing to take a 15-minute training: one at 3, two at 4, three at 5.',
+  'fig_choice.png': 'Bar charts of survey questions 6 and 7 (n = 6). Process to learn more about: both tools 5, Course Manager tool 1, metadata reports 0. What would help most: training plus documentation 5, more documentation 1, more targeted training 0.',
+  'cm_form.png': 'Mock-up of the Course Manager search form: search text Math 6, curriculum and subject area set to Any, school year 2022-2023, linked courses included, managed at organization root, available at Virtual School 07.',
+  'cm_math6_base.png': 'Mock-up of Course Manager results for Math 6 with the blank Base Course ID cells highlighted for base courses 789, 901, 432 and 678.',
+  'cm_math6_linked.png': 'Mock-up of Course Manager results for Math 6 with the Base Course ID cells highlighted for linked courses 345 (base 789) and 456 (base 901).',
+  'cmr_form_gen.png': 'Mock-up of the Course Metadata Report settings: school year 2023-2024, output to Excel, managed at organization root, available at any location, with the Generate Report button highlighted.',
+  'cm_math6_full.png': 'Exhibit 1, mock-up of Course Manager results for Math 6: 345 Connected Math 6 A, base 789; 456 Connected Math 6 B, base 901; 789 Essential Math 6 A; 901 Essential Math 6 B; 432 Math 6 A; 678 Math 6 B. Courses with no base course ID are base courses.',
+  'cmr_tx.png': 'Exhibit 2, mock-up of a Course Metadata Report: 583 and 584 are the Texas State History 7 A and B base courses; 587 links to 583 and 586 links to 584; 765 Alabama State History 4 is a base course with linked course 905; 894 Arizona State History 3 is a base course.',
+  'cm_amgov.png': 'Exhibit 3, mock-up of Course Manager results for 23/24 American Government: national base course 140627 with eight school copies linked to it; state versions 141123 (AR), 140998 (NV), 140995 (CA) and 140507 (FL), with 148953 linked to 140507; Honors American Government B base 149715 with two linked copies.',
+  'cmr_geo.png': 'Exhibit 4, mock-up of a Course Metadata Report for Geography and Society: state versions 141140 (UT), 140244 (TX), 141132 (MN, with linked 149146) and 140923 (AR); national 23/24 base course 149418 with nine school copies linked to it; 149445 links to 126201.',
+};
 // ---------- helpers ----------
 const runs = (t, o = {}) => {
   // supports **bold** inline
@@ -29,7 +41,7 @@ const IMG = (path, widthPx, align = AlignmentType.CENTER) => {
   const s = sizeOf(path); const w = Math.min(widthPx, 624); const h = Math.round(w * s.h / s.w);
   return new Paragraph({ alignment: align, spacing: { before: 80, after: 80 },
     children: [new ImageRun({ type: 'png', data: fs.readFileSync(path), transformation: { width: w, height: h },
-      altText: { title: 'figure', description: path.split('/').pop(), name: 'figure' } })] });
+      altText: { title: ALT[path.split('/').pop()] ? 'Figure' : '', description: ALT[path.split('/').pop()] || '', name: path.split('/').pop() } })] });
 };
 const border = { style: BorderStyle.SINGLE, size: 4, color: 'BFBFBF' };
 const borders = { top: border, bottom: border, left: border, right: border };

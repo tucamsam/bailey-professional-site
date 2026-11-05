@@ -11,23 +11,24 @@
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to main content</a>
 <header class="top"><div class="wrap"><a class="name" href="./">Bailey Tucker</a><nav aria-label="Site">
 <a href="course/">Course</a>
 <a href="design-process.html" aria-current="page">Design process</a>
 <a href="work-samples-note.html">About these samples</a>
 </nav></div></header>
-<main>
+<main id="main" tabindex="-1">
 <div class="wrap narrow page-head"><small>Design process</small><h1>How I Designed It</h1><p>The process and learning theory behind my work samples, phase by phase.</p></div>
 <article class="wrap narrow prose">
 <p>My work samples come from one project carried through all five ADDIE phases. The performance problem was real: a newly formed team of curriculum alignment specialists started work in the wrong course record nearly 30% of the time. That happened because they chose the wrong Course Identification Number (CID) from a catalog of more than 150,000. I used the Morrison, Ross, Kalman and Kemp model from <em>Designing Effective Instruction</em> as my working method inside the ADDIE framework. That model treats design as a flexible cycle of interdependent decisions rather than a strict linear sequence.</p>
 <h2>At a glance</h2>
-<div class="tw"><table>
+<div class="tw" tabindex="0" role="region" aria-label="ADDIE phases, what I did, and where it shows"><table><caption class="sr">ADDIE phases, what I did, and where it shows</caption>
 
 <thead>
 <tr class="header">
-<th>ADDIE phase</th>
-<th>What I did</th>
-<th>Where it shows</th>
+<th scope="col">ADDIE phase</th>
+<th scope="col">What I did</th>
+<th scope="col">Where it shows</th>
 </tr>
 </thead>
 <tbody>
@@ -91,14 +92,14 @@
 <p><em>Portfolio note: the screencasts were recorded inside a proprietary system, so in this version they are replaced by labeled placeholders, and every system screen is a mock-up with fictional data.</em></p>
 <h2>Evaluation: testing before scaling</h2>
 <p>The formative evaluation plan follows the classic staged approach described by Dick, Carey and Carey and adopted in Morrison et al. Each stage tests a revised version with more learners than the last:</p>
-<div class="tw"><table>
+<div class="tw" tabindex="0" role="region" aria-label="Formative evaluation stages"><table><caption class="sr">Formative evaluation stages</caption>
 
 <thead>
 <tr class="header">
-<th>Stage</th>
-<th>Testers</th>
-<th>Purpose</th>
-<th>Instruments</th>
+<th scope="col">Stage</th>
+<th scope="col">Testers</th>
+<th scope="col">Purpose</th>
+<th scope="col">Instruments</th>
 </tr>
 </thead>
 <tbody>
@@ -131,12 +132,12 @@
 <p>The plan answers four stakeholder questions: whether the objectives were met, whether the content is sufficient, whether it needs to expand, and whether other teams should take it. Posttest results are analyzed item by item, so a missed question points to a specific gap in the content rather than a vague “scores were low.” In Kirkpatrick’s terms, the attitude survey measures <strong>reaction (Level 1)</strong> and the posttest measures <strong>learning (Level 2)</strong>. The business measure that started the project, the 30% wrong-CID rate, is the natural <strong>behavior and results (Levels 3–4)</strong> check after launch.</p>
 <h2>Adult learning theory in the design</h2>
 <p>My learners were experienced, certified educators, so the design leans on <strong>andragogy</strong>, Knowles’ model of how adults learn. Each of its six assumptions shows up in a concrete decision:</p>
-<div class="tw"><table>
+<div class="tw" tabindex="0" role="region" aria-label="Andragogy assumptions and how they shaped the module"><table><caption class="sr">Andragogy assumptions and how they shaped the module</caption>
 
 <thead>
 <tr class="header">
-<th>Andragogy assumption</th>
-<th>How it shaped the module</th>
+<th scope="col">Andragogy assumption</th>
+<th scope="col">How it shaped the module</th>
 </tr>
 </thead>
 <tbody>
@@ -175,11 +176,18 @@
 <li><strong>Keller’s ARCS model.</strong> <em>Attention</em> comes from a real problem and interactive branching. <em>Relevance</em> comes from authentic work examples. <em>Confidence</em> comes from short topics, practice before the test, and “Try again” feedback. <em>Satisfaction</em> comes from immediate correct-answer feedback and a skill learners use the same week.</li>
 <li><strong>Bloom’s taxonomy and Merrill’s content–performance matrix.</strong> I used them to keep each objective, its practice, and its posttest items at the same level (remember vs. apply).</li>
 </ul>
+<h2>Accessibility: building to WCAG 2.2 AA</h2>
+<p>When I rebuilt the course as a web page, I built it to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> Level AA, the current version of the web accessibility standard that schools, universities, and public agencies are increasingly required to follow. My adult learners would include people who use screen readers, keyboards, magnification, or high contrast settings, and the course has to work for all of them. These are the requirements that shaped the build most:</p>
+<div class="tw" tabindex="0" role="region" aria-label="WCAG 2.2 AA requirements and how the course meets them"><table><caption class="sr">WCAG 2.2 AA requirements and how the course meets them</caption><thead><tr><th scope="col">WCAG requirement</th><th scope="col">What it means</th><th scope="col">How the course meets it</th></tr></thead><tbody><tr><th scope="row">1.1.1 Non-text content</th><td>Every image has a text alternative</td><td>Each mock-up screen has alt text. Any screen learners need to read data from also has a "Text version of this screen" table with the same data, so every question can be answered without seeing the image.</td></tr><tr><th scope="row">1.3.1 Info and relationships</th><td>Structure is built into the code, not just shown visually</td><td>Headings run in order, data tables use header cells, and each set of answer choices is a labeled group tied to its question.</td></tr><tr><th scope="row">1.4.3 / 1.4.11 Contrast</th><td>Text and controls stand out from their background</td><td>All text is at least 5.6:1 against its background in both light and dark mode (the minimum is 4.5:1). Focus rings, radio buttons, and other control parts meet the 3:1 minimum.</td></tr><tr><th scope="row">1.4.10 Reflow</th><td>Works on a small screen or zoomed in without sideways scrolling</td><td>The course and site work at 320 pixels wide. Wide tables scroll inside their own box instead of pushing the page sideways.</td></tr><tr><th scope="row">2.1.1 / 2.1.2 Keyboard</th><td>Everything works without a mouse, and nothing traps you</td><td>Every lesson, practice question, and the posttest can be completed with Tab, Enter, Space, and the arrow keys. Escape closes the phone lesson menu.</td></tr><tr><th scope="row">2.4.1 Bypass blocks</th><td>Skip past repeated menus</td><td>A "Skip to lesson content" link is the first thing a keyboard user reaches.</td></tr><tr><th scope="row">2.4.3 / 2.4.7 Focus order and focus visible</th><td>You can always see where you are, and focus goes somewhere sensible</td><td>A visible focus ring appears on every background, including the purple ones. After you answer a question or move to a new lesson, focus moves to the feedback or the new lesson heading instead of back to the top of the page.</td></tr><tr><th scope="row">2.4.11 Focus not obscured (new in 2.2)</th><td>The focused item is never hidden</td><td>The hidden phone menu is removed from the keyboard order while it is closed, and the sticky top bar never covers the focused item.</td></tr><tr><th scope="row">2.5.8 Target size (new in 2.2)</th><td>Controls are big enough to hit</td><td>Buttons, links, and answer choices are at least 24 by 24 pixels.</td></tr><tr><th scope="row">2.4.5 / 3.2.6 Multiple ways and consistent help (3.2.6 new in 2.2)</th><td>Pages are easy to find, and help is always in the same place</td><td>Every page has the same footer with links to all pages and the same contact details in the same position.</td></tr><tr><th scope="row">4.1.2 / 4.1.3 Name, role, value and status messages</th><td>Screen readers know what each control is and hear what changes</td><td>Tabs, flip cards, step-through panels, and answer groups have proper names and states. "Correct" and "Try again" feedback is announced as soon as it appears.</td></tr></tbody></table></div>
+<p><strong>Beyond AA.</strong> Buttons and cards keep a visible outline in Windows Contrast themes, the course follows the learner's light or dark mode setting, and animation is turned off for anyone who has asked their device to reduce motion.</p>
+<p><strong>How I checked it.</strong> I ran automated accessibility scans (axe-core) on every page and every course state, in light and dark mode, at desktop and phone widths. I then tested by hand: keyboard-only use, contrast measurement, a 320-pixel reflow check, and a review of what screen readers announce for each control. The downloadable design document is a tagged PDF with alt text on every figure.</p>
+<p><strong>What's still open.</strong> The original narrated screencasts are not included in this portfolio version. If they were restored, each would need captions (1.2.2) and a transcript or audio description (1.2.5) before release.</p>
+
 <h2>Looking back: what I’d do differently today</h2>
 <p>I completed this project in 2022, and my practice has grown since. If I rebuilt it now, I would:</p>
 <ul>
 <li><strong>Build it in a dedicated authoring tool</strong> such as Articulate Storyline or Rise, with SCORM or xAPI tracking, instead of PowerPoint hyperlinks.</li>
-<li><strong>Design for accessibility from the start</strong>: captions and transcripts for every screencast, meaningful alt text, keyboard-friendly navigation, and color contrast checked against WCAG.</li>
+<li><strong>Design for accessibility from the start</strong>. The original PowerPoint prototype treated accessibility as an afterthought. The web version on this site was built to WCAG 2.2 AA from the beginning, and that is now how I start every project.</li>
 <li><strong>Make the checklist a standalone, printable job aid</strong> learners can keep open beside the system.</li>
 <li><strong>Add scenario-based assessment</strong> that asks learners to explain why a CID is correct, not just pick it, to capture their reasoning.</li>
 <li><strong>Measure transfer</strong> by tracking the team’s wrong-CID rate for a sprint or two after launch. That Level 3–4 evidence is what tells a business the training worked.</li>
@@ -200,6 +208,10 @@
 </ul>
 </article>
 </main>
-<footer><div class="wrap">Bailey Tucker · Instructional Design Portfolio</div></footer>
+<footer class="site-foot"><div class="wrap foot-grid">
+  <nav aria-labelledby="foot-pages"><h2 id="foot-pages" class="foot-h">Pages</h2><ul class="foot-list"><li><a href="./">Home</a></li><li><a href="course/">eLearning course</a></li><li><a href="design-process.html" aria-current="page">Design process</a></li><li><a href="work-samples-note.html">About these samples</a></li><li><a href="samples/Tucker_ID_Design_Document_Locating_Course_ID.pdf">Design document (PDF)</a></li></ul></nav>
+  <div><h2 class="foot-h">Contact</h2><p class="foot-contact">Email: <a href="mailto:bailey.c.tucker@gmail.com">bailey.c.tucker@gmail.com</a></p></div>
+  <p class="foot-copy">Bailey Tucker · Instructional Design Portfolio</p>
+</div></footer>
 </body>
 </html>

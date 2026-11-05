@@ -51,7 +51,7 @@ aside{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:a
 nav ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
 nav button{width:100%;text-align:left;background:none;border:0;padding:9px 10px;border-radius:8px;display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;font-size:15.5px;line-height:1.35;color:var(--fg)}
 nav button:hover{background:var(--accent-soft)}
-nav button[aria-current="true"]{background:var(--accent-soft);font-weight:700}
+nav button[aria-current="page"]{background:var(--accent-soft);font-weight:700}
 nav .dot{width:18px;height:18px;margin-top:1px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center}
 nav .done .dot{background:var(--accent);border-color:var(--accent)}
 nav .done .dot::after{content:"";width:8px;height:4px;border:2px solid var(--accent-ink);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
@@ -93,7 +93,9 @@ figcaption{font-size:14.5px;color:var(--muted)}
 .card .inner{position:relative;height:100%;min-height:220px}
 .card .front{background:var(--accent);color:var(--accent-ink)}
 .card .front .n{font-family:var(--display);font-size:44px;line-height:1;opacity:.6}
-.card .front h3{font-size:21px}
+.card .face{text-align:left}
+.card .inner{display:block}
+.card .front .ct{display:block;font-family:var(--display);font-size:21px;font-weight:700;line-height:1.15}
 .card .back{background:var(--panel);border:1px solid var(--line);transform:rotateY(180deg);font-size:16px;line-height:1.5}
 .card .hint{font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;opacity:.8}
 .card.flip .front{transform:rotateY(-180deg)}
@@ -118,7 +120,7 @@ figcaption{font-size:14.5px;color:var(--muted)}
 .proc .pips{display:flex;gap:6px}
 .proc .pips i{width:26px;height:5px;border-radius:3px;background:var(--line)}
 .proc .pips i.on{background:var(--accent)}
-.proc h3{font-size:22px}
+.proc .pt{font-family:var(--display);font-size:22px;font-weight:700;line-height:1.15}
 .proc .pb{display:grid;gap:12px;min-height:120px}
 .proc .pnav{display:flex;justify-content:space-between;gap:12px}
 
@@ -187,26 +189,69 @@ td.m{font-family:var(--mono);font-size:14.5px}
   .lhead{padding-block:40px 34px}
   body{font-size:17px}
 }
+/* site footer (matches assets/site.css): pages, then contact */
+.site-foot{border-top:1px solid var(--line);background:var(--panel);color:var(--muted);font-size:16px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.foot-in{max-width:760px;margin:0 auto}
+.foot-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:24px 40px;padding-block:36px 28px}
+.foot-h{font-family:var(--display);font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg);margin:0 0 10px}
+.foot-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 24px}
+.foot-list a,.foot-contact a{display:inline-block;padding-block:3px;min-height:24px;color:var(--accent)}
+.foot-list a[aria-current="page"]{color:var(--fg);font-weight:700;text-decoration:none}
+.foot-contact{margin:0;overflow-wrap:anywhere}
+.foot-copy{grid-column:1/-1;margin:0;border-top:1px solid var(--line);padding-top:16px;font-size:14px}
+@media (max-width:860px){.foot-grid{grid-template-columns:minmax(0,1fr)}}
+/* accessibility helpers */
+.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:absolute;left:12px;top:-100px;z-index:50;background:var(--accent);color:var(--accent-ink);padding:10px 16px;border-radius:8px;font-weight:700;text-decoration:none}
+.skip:focus{top:calc(12px + env(safe-area-inset-top,0px))}
+#view:focus,.lhead h1:focus,.fb:focus,.q:focus,.score h2:focus{outline:none}
+.foot a{display:inline-block;padding:4px 0;min-height:24px}
+.tv{font-size:15.5px}
+.tv summary{cursor:pointer;color:var(--accent);font-weight:700;padding:6px 0;min-height:24px}
+.tv .tw{margin-top:8px}
+.card .face p{margin:0}
+@media (max-width:860px){html{scroll-padding-top:64px}}
+/* Windows Contrast themes (forced colors): background fills are dropped, so give filled controls a visible edge.
+   No effect for anyone not using a Contrast theme. */
+@media (forced-colors: active){
+  .btn,.skip,.topbar button,.card .front{border:2px solid ButtonText}
+  .btn:disabled{border-color:GrayText;color:GrayText}
+  nav button[aria-current="page"]{outline:2px solid Highlight;outline-offset:-2px}
+  .bar{border:1px solid CanvasText}
+  .bar i,.proc .pips i.on{forced-color-adjust:none;background:Highlight}
+  .proc .pips i{border:1px solid CanvasText}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
 </head>
 <body>
+<a class="skip" href="#view">Skip to lesson content</a>
 <div class="shell">
   <aside id="side" aria-label="Course outline">
     <div class="brand"><small>Self-paced course · 15–20 min</small><h2>Locating the Correct Course ID</h2></div>
-    <div class="prog"><span id="progtxt">0% complete</span><div class="bar"><i id="progbar"></i></div></div>
-    <nav><ol id="nav"></ol></nav>
+    <div class="prog"><span id="progtxt">0% complete</span><div class="bar" aria-hidden="true"><i id="progbar"></i></div></div>
+    <nav aria-label="Lessons"><ol id="nav"></ol></nav>
     <div class="foot"><a href="../" style="color:var(--accent);font-weight:700;text-decoration:none">&larr; Back to portfolio</a><br><br>Portfolio sample by Bailey Tucker. Organization details removed; every system screen is a mock-up with fictional data.</div>
   </aside>
   <main>
     <div class="topbar"><span id="tbtitle">Locating the Correct Course ID</span><button id="menubtn" aria-controls="side" aria-expanded="false">Lessons</button></div>
-    <div id="view"></div>
+    <div id="view" tabindex="-1"></div>
+    <footer class="site-foot"><div class="foot-in foot-grid">
+  <nav aria-labelledby="foot-pages"><h2 id="foot-pages" class="foot-h">Pages</h2><ul class="foot-list"><li><a href="../">Home</a></li><li><a href="../course/" aria-current="page">eLearning course</a></li><li><a href="../design-process.html">Design process</a></li><li><a href="../work-samples-note.html">About these samples</a></li><li><a href="../samples/Tucker_ID_Design_Document_Locating_Course_ID.pdf">Design document (PDF)</a></li></ul></nav>
+  <div><h2 class="foot-h">Contact</h2><p class="foot-contact">Email: <a href="mailto:bailey.c.tucker@gmail.com">bailey.c.tucker@gmail.com</a></p></div>
+  <p class="foot-copy">Bailey Tucker · Instructional Design Portfolio</p>
+</div></footer>
   </main>
 </div>
 
 <script>
+let UID=0; const uid=p=>`${p}${++UID}`;
 const IMG = n => `img/${n}.webp`;
+// Text versions of the mock-up screens (same fictional data as the images), so every exhibit can be read without seeing it.
+const EXDATA = {"cm_math6_full": {"h": ["ID", "Name", "Base Course ID", "Management Description"], "r": [["345", "Connected Math 6 A", "789", "Physical, Standard C, Non-Standard M"], ["456", "Connected Math 6 B", "901", "Physical, Standard C, Non-Standard M"], ["789", "Essential Math 6 A", "", "Physical, Standard C, Standard M"], ["901", "Essential Math 6 B", "", "Physical, Standard C, Standard M"], ["432", "Math 6 A", "", "Physical, Standard C, Standard M"], ["678", "Math 6 B", "", "Physical, Standard C, Standard M"]]}, "cm_math6_base": {"h": ["ID", "Name", "Base Course ID", "Management Description"], "r": [["345", "Connected Math 6 A", "789", "Physical, Standard C, Non-Standard M"], ["456", "Connected Math 6 B", "901", "Physical, Standard C, Non-Standard M"], ["789", "Essential Math 6 A", "", "Physical, Standard C, Standard M"], ["901", "Essential Math 6 B", "", "Physical, Standard C, Standard M"], ["432", "Math 6 A", "", "Physical, Standard C, Standard M"], ["678", "Math 6 B", "", "Physical, Standard C, Standard M"]]}, "cm_math6_linked": {"h": ["ID", "Name", "Base Course ID", "Management Description"], "r": [["345", "Connected Math 6 A", "789", "Physical, Standard C, Non-Standard M"], ["456", "Connected Math 6 B", "901", "Physical, Standard C, Non-Standard M"], ["789", "Essential Math 6 A", "", "Physical, Standard C, Standard M"], ["901", "Essential Math 6 B", "", "Physical, Standard C, Standard M"], ["432", "Math 6 A", "", "Physical, Standard C, Standard M"], ["678", "Math 6 B", "", "Physical, Standard C, Standard M"]]}, "cm_amgov": {"h": ["ID", "Name", "Base Course ID", "Management Description"], "r": [["149715", "23/24 Honors American Government B", "", "Standard C, Standard M, National"], ["149725", "23/24 Honors American Government B", "149715", "Standard C, Standard M, School 03"], ["149726", "23/24 Honors American Government B", "149715", "Standard C, Standard M, School 05"], ["140627", "23/24 American Government", "", "Standard C, Standard M, National"], ["149549", "23/24 American Government", "140627", "Standard C, Standard M, School 01"], ["149550", "23/24 American Government", "140627", "Standard C, Standard M, School 02"], ["149551", "23/24 American Government", "140627", "Standard C, Standard M, School 03"], ["149552", "23/24 American Government", "140627", "Standard C, Standard M, School 04"], ["149553", "23/24 American Government", "140627", "Standard C, Standard M, School 05"], ["149554", "23/24 American Government", "140627", "Standard C, Standard M, School 06"], ["149555", "23/24 American Government", "140627", "Standard C, Standard M, School 07"], ["149556", "23/24 American Government", "140627", "Standard C, Standard M, School 08"], ["141123", "23/24 American Government (AR)", "", "Standard C, Standard M, National, AR"], ["140998", "23/24 American Government (NV)", "", "Standard C, Standard M, NV"], ["140995", "23/24 American Government (CA)", "", "Standard C, Standard M, Multiple"], ["140507", "23/24 American Government (FL)", "", "Standard C, Standard M, National"], ["148953", "23/24 American Government (FL)", "140507", "Standard C, Standard M, Coastal"]]}, "cmr_tx": {"h": ["Course ID", "Name", "Display Name", "Base Course ID", "Management Description"], "r": [["583", "22/23 P: Texas State History 7 A", "Texas State History 7 A", "", "Standard C, Standard M, TX"], ["587", "22/23 P: Texas State History 7 A", "Texas State History 7 A", "583", "Standard C, Standard M, School 11"], ["584", "22/23 P: Texas State History 7 B", "Texas State History 7 B", "", "Standard C, Standard M, TX"], ["586", "22/23 P: Texas State History 7 B", "Texas State History 7 B", "584", "Standard C, Standard M, School 11"], ["765", "Alabama State History 4", "Alabama State History 4", "", "Standard C, Standard M, AL"], ["905", "Alabama State History 4", "Alabama State History 4", "765", "Standard C, Standard M, School 02"], ["894", "Arizona State History 3", "Arizona State History", "", "Standard C, Standard M, AZ"]]}, "cmr_geo": {"h": ["Course ID", "Name", "Display Name", "Base Course ID", "Management Description"], "r": [["149445", "Geography and Society", "Geography and Society", "126201", "Standard C, Non-Standard M, National"], ["141140", "23/24 Geography and Society (UT)", "Geography and Society", "", "Standard C, Standard M, National, UT"], ["140244", "23/24 Geography and Society (TX)", "Geography and Society", "", "Standard C, Standard M, National, TX"], ["141132", "23/24 Geography and Society (MN)", "Geography and Society", "", "Standard C, Standard M, National"], ["149146", "23/24 Geography and Society (MN)", "Geography and Society", "141132", "Standard C, Standard M, School 09"], ["140923", "23/24 Geography and Society (AR)", "Geography and Society", "", "Standard C, Standard M, National, AR"], ["149418", "23/24 Geography and Society", "Geography and Society", "", "Standard C, Standard M, National"], ["149419", "23/24 Geography and Society", "Geography and Society", "149418", "Standard C, Standard M, School 01"], ["149420", "23/24 Geography and Society", "Geography and Society", "149418", "Standard C, Standard M, School 02"], ["149421", "23/24 Geography and Society", "Geography and Society", "149418", "Standard C, Standard M, School 03"], ["149422", "23/24 Geography and Society", "Geography and Society", "149418", "Standard C, Standard M, School 04"], ["149423", "23/24 Geography and Society", "Geography and Society", "149418", "Standard C, Standard M, School 05"], ["149424", "23/24 Geography and Society", "Geography and Society", "149418", "Standard C, Standard M, School 06"], ["149425", "23/24 Geography and Society", "Geography and Society", "149418", "Standard C, Standard M, School 07"], ["149426", "23/24 Geography and Society", "Geography and Society", "149418", "Standard C, Standard M, School 08"], ["149427", "23/24 Geography and Society", "Geography and Society", "149418", "Standard C, Standard M, School 09"]]}};
+const tableHTML = (head, rows, label) => `<div class="tw" tabindex="0" role="region" aria-label="${label}"><table><caption class="sr">${label}</caption><tr>${head.map(h=>`<th scope="col">${h}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map((c,j)=>`<td class="${/ID/.test(head[j])?'m':''}">${c||'<span class="sr">blank</span>'}</td>`).join('')}</tr>`).join('')}</table></div>`;
+const textVersion = (name, label) => EXDATA[name] ? `<details class="tv"><summary>Text version of this screen</summary>${tableHTML(EXDATA[name].h, EXDATA[name].r, label)}</details>` : '';
 const C = s => `<span class="cid">${s}</span>`;
 
 const LESSONS = [
@@ -236,7 +281,7 @@ const LESSONS = [
  {id:'cm-locate', sec:'Topics', title:'Locate a CID in Course Manager', kicker:'Topic 2',
   sub:'Set the search up correctly and the right record is easy to spot.', blocks:[
   {t:'text', html:`<p>Course Manager searches the full catalog. Most mistakes come from fields that were changed when they should have been left alone. Step through the search fields below.</p>`},
-  {t:'process', steps:[
+  {t:'process', label:'Course Manager search fields, step by step', steps:[
     ['Search Text','Enter all or part of the course name or display name. It works like any search bar.'],
     ['Curriculum and Subject Area','Leave both set to <strong>Any</strong>. Narrowing them can quietly filter out the course you need if it’s tagged differently than you expect.'],
     ['School Year','Choose the year from your checklist. Select more than one year if you need to compare.'],
@@ -264,14 +309,14 @@ const LESSONS = [
   {t:'acc', items:[
     ['Full report', `<p>Set <strong>Available At</strong> to <strong>Any location</strong> to pull every active course at every location for the years you choose. Use it when you’re not sure where a course is offered.</p>`],
     ['Specific-location report', `<p>Choose <strong>Specific location</strong> and select schools to pull only their courses. Use it when your project covers known schools and you want a smaller file.</p>`]]},
-  {t:'process', steps:[
+  {t:'process', label:'Course Metadata Report settings, step by step', steps:[
     ['School Year(s)','Check every school year you need.'],
     ['Output Type','Leave as <strong>Generate report in Excel</strong>. The inline option adds rich-text and cost data you don’t need for this task.'],
     ['Managed At','Leave at the organization root. The report won’t run otherwise.'],
     ['Available At','Pick <strong>Any location</strong> or a specific location, as decided above.'],
     ['Generate Report','Select <strong>Generate Report</strong> and open the spreadsheet when it’s ready.']]},
   {t:'img', src:'cmr_form_gen', alt:'Course Metadata Report settings with 2023-2024 selected and Generate Report highlighted', cap:'Course Metadata Report settings (mock-up).'},
-  {t:'text', html:`<h3>Filter the spreadsheet</h3><p>Turn on filters in the header row, then narrow by <strong>location</strong>, <strong>school year</strong>, <strong>subject</strong>, and <strong>grade</strong> until only the candidates are left. Check them against your checklist.</p>`},
+  {t:'text', html:`<h2>Filter the spreadsheet</h2><p>Turn on filters in the header row, then narrow by <strong>location</strong>, <strong>school year</strong>, <strong>subject</strong>, and <strong>grade</strong> until only the candidates are left. Check them against your checklist.</p>`},
   {t:'video', poster:'cmr_geo', title:'Watch: running and filtering a report', dur:'1:58'},
   {t:'kc', id:'k4', q:'Using the filtered report below, which CID is correct for the 23/24 Economics course for Colorado?', ex:{table:{head:['Course ID','Name','Base Course ID','Management Description'], rows:[['110998','23/24 Economics (NV)','','Standard C, Standard M, NV'],['117486','23/24 Economics (CO)','','Standard C, Standard M, CO'],['116743','23/24 Economics','','Standard C, Standard M, National'],['121311','23/24 Economics','116743','Standard C, Standard M, School 04']]}, label:'Course Metadata Report extract, filtered to Economics'}, opts:['110998','117486','116743','121311'], mono:true, a:1,
    ok:`${C('117486')} is the 23/24 Economics course tagged to Colorado.`, no:'Look for the Colorado (CO) version in the Name and Management Description columns.'},
@@ -311,7 +356,7 @@ const done = i => { const L = LESSONS[i]; if(L.quiz) return !!(S.quiz && S.quiz.
 function renderNav(){
   const nav = document.getElementById('nav'); let html='', sec='';
   LESSONS.forEach((L,i)=>{ if(L.sec!==sec){ sec=L.sec; html+=`<li class="sec">${sec}</li>`; }
-    html+=`<li class="${done(i)?'done':''}"><button data-go="${i}" aria-current="${i===S.cur}"><span class="dot"></span><span>${L.title}</span></button></li>`; });
+    html+=`<li class="${done(i)?'done':''}"><button data-go="${i}" ${i===S.cur?'aria-current="page"':''}><span class="dot" aria-hidden="true"></span><span>${done(i)?'<span class="sr">Completed: </span>':''}${L.title}</span></button></li>`; });
   nav.innerHTML = html;
   const pct = Math.round(LESSONS.filter((_,i)=>done(i)).length / LESSONS.length * 100);
   document.getElementById('progtxt').textContent = `${pct}% complete`;
@@ -321,8 +366,8 @@ function renderNav(){
 const opt = (txt,i,mono) => `<button class="opt" role="radio" aria-checked="false" data-i="${i}"><span class="r"></span><span>${mono?C(txt):txt}</span></button>`;
 function exhibit(ex){
   if(!ex) return '';
-  if(ex.table) return `<div class="ex"><span>${ex.label}</span><div class="tw"><table><tr>${ex.table.head.map(h=>`<th>${h}</th>`).join('')}</tr>${ex.table.rows.map(r=>`<tr>${r.map((c,j)=>`<td class="${j!==1&&j!==3?'m':''}">${c}</td>`).join('')}</tr>`).join('')}</table></div></div>`;
-  return `<div class="ex"><span>${ex.label}</span><div class="shot"><img src="${IMG(ex.img)}" alt="${ex.label} (mock-up with fictional data)" loading="lazy"></div></div>`;
+  if(ex.table) return `<div class="ex"><span>${ex.label}</span>${tableHTML(ex.table.head, ex.table.rows, ex.label)}</div>`;
+  return `<div class="ex"><span>${ex.label}</span><div class="shot"><img src="${IMG(ex.img)}" alt="${ex.label} (mock-up with fictional data). A text version follows." loading="lazy"></div>${textVersion(ex.img, ex.label)}</div>`;
 }
 
 function block(b){
@@ -331,27 +376,28 @@ function block(b){
    case 'note': return `<div class="note"><b>${b.title}</b><div>${b.html}</div></div>`;
    case 'facts': return `<div class="facts">${b.items.map(([n,l])=>`<div class="fact"><b>${n}</b><span>${l}</span></div>`).join('')}</div>`;
    case 'map': return `<ol class="map">${b.items.map(t=>`<li>${t}</li>`).join('')}</ol>`;
-   case 'img': return `<figure><div class="shot"><img src="${IMG(b.src)}" alt="${b.alt}" loading="lazy"></div><figcaption>${b.cap}</figcaption></figure>`;
-   case 'cards': return `<div class="cards">${b.items.map(([n,h,back])=>`<button class="card" aria-pressed="false"><div class="inner"><div class="face front"><span class="n">${n}</span><h3>${h}</h3><span class="hint">Select to flip</span></div><div class="face back"><p>${back}</p><span class="hint">Select to flip back</span></div></div></button>`).join('')}</div>`;
+   case 'img': return `<figure><div class="shot"><img src="${IMG(b.src)}" alt="${b.alt}" loading="lazy"></div><figcaption>${b.cap}</figcaption>${textVersion(b.src, b.alt)}</figure>`;
+   case 'cards': return `<div class="cards">${b.items.map(([n,h,back])=>{ const id=uid('card'); return `<button class="card" aria-pressed="false" aria-labelledby="${id}-t" aria-describedby="${id}-d"><span class="inner"><span class="face front"><span class="n" aria-hidden="true">${n}</span><span class="ct" id="${id}-t">${h}</span><span class="hint" aria-hidden="true">Select to flip</span></span><span class="face back"><span class="bd" id="${id}-d">${back}</span><span class="hint" aria-hidden="true">Select to flip back</span></span></span></button>`; }).join('')}</div>`;
    case 'acc': return `<div class="acc">${b.items.map(([t,h])=>`<details><summary>${t}</summary><div class="ab">${h}</div></details>`).join('')}</div>`;
-   case 'tabs': return `<div class="tabs"><div class="tl" role="tablist">${b.items.map(([t],i)=>`<button role="tab" aria-selected="${i===0}" data-tab="${i}">${t}</button>`).join('')}</div>${b.items.map(([t,h,img,alt],i)=>`<div class="tp" role="tabpanel" ${i?'hidden':''}>${h}<div class="shot"><img src="${IMG(img)}" alt="${alt} (mock-up)" loading="lazy"></div></div>`).join('')}</div>`;
-   case 'process': return `<div class="proc" data-step="0" data-steps='${JSON.stringify(b.steps).replace(/'/g,"&#39;")}'></div>`;
+   case 'tabs': { const id=uid('tabs'); return `<div class="tabs"><div class="tl" role="tablist" aria-label="Base and linked courses">${b.items.map(([t],i)=>`<button role="tab" id="${id}-t${i}" aria-controls="${id}-p${i}" aria-selected="${i===0}" tabindex="${i===0?0:-1}" data-tab="${i}">${t}</button>`).join('')}</div>${b.items.map(([t,h,img,alt],i)=>`<div class="tp" role="tabpanel" id="${id}-p${i}" aria-labelledby="${id}-t${i}" tabindex="0" ${i?'hidden':''}>${h}<div class="shot"><img src="${IMG(img)}" alt="${alt} (mock-up)" loading="lazy"></div>${textVersion(img, alt)}</div>`).join('')}</div>`; }
+   case 'process': return `<div class="proc" role="group" aria-label="${b.label||'Step-by-step walkthrough'}" data-step="0" data-steps='${JSON.stringify(b.steps).replace(/'/g,"&#39;")}'></div>`;
    case 'video': return `<div class="video"><img src="${IMG(b.poster)}" alt="" loading="lazy"><div class="ov"><div class="vc"><i class="play" aria-hidden="true"></i><div><b>${b.title} (${b.dur})</b><span>Narrated screencast. The recording was made in a proprietary system, so it's not included in this portfolio version.</span></div></div></div></div>`;
    case 'kc': { const st = S.kc[b.id];
-     return `<div class="kc" data-kc="${b.id}"><span class="eyebrow">Knowledge check</span><p class="q">${b.q}</p>${exhibit(b.ex)}<div class="opts" role="radiogroup">${b.opts.map((o,i)=>opt(o,i,b.mono)).join('')}</div><div class="btnrow"><button class="btn" data-submit disabled>Submit</button></div><div class="fbx"></div></div>`; }
+     return `<div class="kc" data-kc="${b.id}"><span class="eyebrow">Knowledge check</span><p class="q" id="${b.id}-q">${b.q}</p>${exhibit(b.ex)}<div class="opts" role="radiogroup" aria-labelledby="${b.id}-q">${b.opts.map((o,i)=>opt(o,i,b.mono)).join('')}</div><div class="btnrow"><button class="btn" data-submit disabled>Submit</button></div><div class="fbx" aria-live="polite"></div></div>`; }
   }
   return '';
 }
 
-function renderProc(el){
+function renderProc(el, keepFocus){
   const steps = JSON.parse(el.dataset.steps), i = +el.dataset.step;
-  el.innerHTML = `<div class="ptop"><span>Step ${i+1} of ${steps.length}</span><span class="pips">${steps.map((_,j)=>`<i class="${j<=i?'on':''}"></i>`).join('')}</span></div><div class="pb"><h3>${steps[i][0]}</h3><p>${steps[i][1]}</p></div><div class="pnav"><button class="btn ghost" data-pp ${i===0?'disabled':''}>Back</button><button class="btn" data-pn ${i===steps.length-1?'disabled':''}>Next step</button></div>`;
+  el.innerHTML = `<div class="ptop"><span>Step ${i+1} of ${steps.length}</span><span class="pips" aria-hidden="true">${steps.map((_,j)=>`<i class="${j<=i?'on':''}"></i>`).join('')}</span></div><div class="pb" aria-live="polite"><span class="sr">Step ${i+1} of ${steps.length}: </span><p class="pt">${steps[i][0]}</p><p>${steps[i][1]}</p></div><div class="pnav"><button class="btn ghost" data-pp ${i===0?'disabled':''}>Back</button><button class="btn" data-pn ${i===steps.length-1?'disabled':''}>Next step</button></div>`;
+  if(keepFocus){ const want=el.querySelector(keepFocus); (want && !want.disabled ? want : el.querySelector('[data-pn]:not([disabled]),[data-pp]:not([disabled])')).focus(); }
 }
 
 function renderLesson(){
   const L = LESSONS[S.cur], v = document.getElementById('view');
   const next = LESSONS[S.cur+1];
-  let html = `<section class="${L.cover?'cover':''}"><header class="lhead"><div class="in"><small>${L.kicker}</small><h1>${L.title}</h1><p>${L.sub}</p></div></header><div class="body"><div class="col">`;
+  let html = `<section class="${L.cover?'cover':''}"><header class="lhead"><div class="in"><small>${L.kicker}</small><h1 tabindex="-1">${L.title}</h1><p>${L.sub}</p></div></header><div class="body"><div class="col">`;
   if(L.quiz) html += `<div id="quiz"></div>`;
   else html += L.blocks.map(block).join('');
   if(!L.quiz) html += `<div class="cont"><button class="btn" data-go="${S.cur+1}">${L.cover?'Start course':'Continue'}</button><small>Next: ${next.title}</small></div>`;
@@ -363,6 +409,7 @@ function renderLesson(){
   if(L.quiz) renderQuiz();
   if(!L.blocks.some(b=>b.t==='kc') && !L.quiz){ S.seen[L.id]=1; }
   document.getElementById('tbtitle').textContent = L.title;
+  document.title = L.cover ? 'Locating the Correct Course ID' : `${L.title} | Locating the Correct Course ID`;
   save(); renderNav();
 }
 
@@ -371,50 +418,67 @@ function grade(el,b,choice,silent){
   btns.forEach((x,i)=>{ x.disabled = right; x.setAttribute('aria-checked', i===choice); x.classList.toggle('right', right && i===b.a); x.classList.toggle('wrong', !right && i===choice); });
   el.querySelector('[data-submit]').disabled = true;
   el.querySelector('[data-submit]').textContent = right ? 'Answered' : 'Submit';
-  el.querySelector('.fbx').innerHTML = right ? `<div class="fb ok" role="status"><b>Correct</b><p>${b.ok}</p></div>` : `<div class="fb no" role="status"><b>Not quite. Try again.</b><p>${b.no}</p></div>`;
-  if(right && !silent){ S.kc[b.id]=1; save(); renderNav(); }
+  el.querySelector('.fbx').innerHTML = right ? `<div class="fb ok"><b>Correct</b><p>${b.ok}</p></div>` : `<div class="fb no"><b>Not quite. Try again.</b><p>${b.no}</p></div>`;
+  if(right && !silent){ S.kc[b.id]=1; save(); renderNav(); const f=el.querySelector('.fb'); f.tabIndex=-1; f.focus({preventScroll:false}); }
 }
 
 // ---------- quiz ----------
+let focusQuiz=false;
 function renderQuiz(){
   const box = document.getElementById('quiz'); const q = S.quiz;
   if(!q){ box.innerHTML = `<div class="tx"><p>You'll answer one question at a time and see feedback after each. Some questions refer to an exhibit shown with the question.</p></div><div class="btnrow"><button class="btn" data-qstart>Start posttest</button></div>`; return; }
   if(q.finished){
     const score = q.ans.filter((a,i)=>a===QUIZ[i].a).length, pct = Math.round(score/QUIZ.length*100);
     const by = Object.keys(OBJ).map(o=>{ const it = QUIZ.map((x,i)=>[x,i]).filter(([x])=>x.o==o); const c = it.filter(([x,i])=>q.ans[i]===x.a).length; return `<div><span>${o}. ${OBJ[o]}</span><b>${c} / ${it.length}</b></div>`; }).join('');
-    box.innerHTML = `<div class="score"><div class="ring" style="--p:${pct}"><b>${pct}%</b></div><h2>${pct===100?'Course complete':'Posttest complete'}</h2><p>You answered ${score} of ${QUIZ.length} correctly. ${pct===100?'You met every objective.':'Review the topics below where you missed a question, then retake the test.'}</p><div class="objres">${by}</div><div class="btnrow"><button class="btn ghost" data-qstart>Retake posttest</button></div></div>
+    box.innerHTML = `<div class="score"><div class="ring" style="--p:${pct}"><b>${pct}%</b></div><h2 tabindex="-1">${pct===100?'Course complete':'Posttest complete'}</h2><p>You answered ${score} of ${QUIZ.length} correctly. ${pct===100?'You met every objective.':'Review the topics below where you missed a question, then retake the test.'}</p><div class="objres">${by}</div><div class="btnrow"><button class="btn ghost" data-qstart>Retake posttest</button></div></div>
       <div class="note"><b>Keep this checklist</b><div>Before every search: <strong>1.</strong> Which school year? <strong>2.</strong> What content source? <strong>3.</strong> Base course or linked course?</div></div>`;
+    if(focusQuiz){ box.querySelector('h2').focus(); focusQuiz=false; }
     return;
   }
   const i = q.i, it = QUIZ[i], ans = q.ans[i];
-  box.innerHTML = `<div class="kc" data-quiz><div class="qhead"><span>Question ${i+1} of ${QUIZ.length}</span><span>Objective ${it.o}</span></div><p class="q">${it.q}</p>${it.ex?exhibit({img:it.ex,label:it.exl}):''}<div class="opts" role="radiogroup">${it.opts.map((o,j)=>opt(o,j,it.mono)).join('')}</div><div class="btnrow"><button class="btn" data-qsubmit disabled>Submit</button></div><div class="fbx"></div></div>`;
+  box.innerHTML = `<div class="kc" data-quiz><div class="qhead"><span>Question ${i+1} of ${QUIZ.length}</span><span>Objective ${it.o}</span></div><p class="q" id="quiz-q">${it.q}</p>${it.ex?exhibit({img:it.ex,label:it.exl}):''}<div class="opts" role="radiogroup" aria-labelledby="quiz-q">${it.opts.map((o,j)=>opt(o,j,it.mono)).join('')}</div><div class="btnrow"><button class="btn" data-qsubmit disabled>Submit</button></div><div class="fbx" aria-live="polite"></div></div>`;
   if(ans!==undefined) showQ(ans);
+  const qp=box.querySelector('.q'); qp.tabIndex=-1; if(focusQuiz){ qp.focus(); focusQuiz=false; }
 }
 function showQ(choice){
   const q=S.quiz, it=QUIZ[q.i], el=document.querySelector('[data-quiz]'), right = choice===it.a;
   el.querySelectorAll('.opt').forEach((x,j)=>{ x.disabled=true; x.setAttribute('aria-checked', j===choice); x.classList.toggle('right', j===it.a); x.classList.toggle('wrong', !right && j===choice); });
   const last = q.i===QUIZ.length-1;
   el.querySelector('.btnrow').innerHTML = `<button class="btn" data-qnext>${last?'See results':'Next question'}</button>`;
-  el.querySelector('.fbx').innerHTML = right ? `<div class="fb ok" role="status"><b>Correct</b></div>` : `<div class="fb no" role="status"><b>Incorrect</b><p>The correct answer is ${it.mono?C(it.opts[it.a]):it.opts[it.a]}. Review Topic ${it.o}.</p></div>`;
+  if(document.activeElement===document.body || !el.contains(document.activeElement)) el.querySelector('[data-qnext]').focus();
+  el.querySelector('.fbx').innerHTML = right ? `<div class="fb ok"><b>Correct</b></div>` : `<div class="fb no"><b>Incorrect</b><p>The correct answer is ${it.mono?C(it.opts[it.a]):it.opts[it.a]}. Review Topic ${it.o}.</p></div>`;
 }
 
 // ---------- events ----------
 document.addEventListener('click', e=>{
   const t = e.target.closest('button, summary'); if(!t) return;
-  if(t.dataset.go!==undefined){ S.cur=+t.dataset.go; document.body.classList.remove('menu'); closeMenu(); renderLesson(); window.scrollTo(0,0); try{history.replaceState(null,'','#'+LESSONS[S.cur].id);}catch(_){} return; }
+  if(t.dataset.go!==undefined){ S.cur=+t.dataset.go; document.body.classList.remove('menu'); closeMenu(); renderLesson(); window.scrollTo(0,0); document.querySelector('.lhead h1').focus({preventScroll:true}); try{history.replaceState(null,'','#'+LESSONS[S.cur].id);}catch(_){} return; }
   if(t.classList.contains('card')){ t.classList.toggle('flip'); t.setAttribute('aria-pressed', t.classList.contains('flip')); return; }
-  if(t.getAttribute('role')==='tab'){ const w=t.closest('.tabs'); w.querySelectorAll('[role=tab]').forEach((b,i)=>{b.setAttribute('aria-selected', b===t); w.querySelectorAll('[role=tabpanel]')[i].hidden = b!==t;}); return; }
-  if(t.dataset.pn!==undefined || t.dataset.pp!==undefined){ const p=t.closest('.proc'); p.dataset.step = +p.dataset.step + (t.dataset.pn!==undefined?1:-1); renderProc(p); return; }
+  if(t.getAttribute('role')==='tab'){ const w=t.closest('.tabs'); w.querySelectorAll('[role=tab]').forEach((b,i)=>{b.setAttribute('aria-selected', b===t); b.tabIndex = b===t?0:-1; w.querySelectorAll('[role=tabpanel]')[i].hidden = b!==t;}); return; }
+  if(t.dataset.pn!==undefined || t.dataset.pp!==undefined){ const p=t.closest('.proc'); const fwd=t.dataset.pn!==undefined; p.dataset.step = +p.dataset.step + (fwd?1:-1); renderProc(p, fwd?'[data-pn]':'[data-pp]'); return; }
   if(t.classList.contains('opt') && !t.disabled){ const g=t.closest('.kc'); g.querySelectorAll('.opt').forEach(x=>{x.setAttribute('aria-checked', x===t); x.classList.remove('wrong');}); const s=g.querySelector('[data-submit],[data-qsubmit]'); if(s){ s.disabled=false; s.textContent='Submit'; } return; }
   if(t.dataset.submit!==undefined){ const g=t.closest('.kc'), b=LESSONS[S.cur].blocks.find(x=>x.id===g.dataset.kc); const c=[...g.querySelectorAll('.opt')].findIndex(x=>x.getAttribute('aria-checked')==='true'); grade(g,b,c); return; }
-  if(t.dataset.qstart!==undefined){ S.quiz={i:0,ans:[],finished:false}; save(); renderQuiz(); renderNav(); return; }
+  if(t.dataset.qstart!==undefined){ S.quiz={i:0,ans:[],finished:false}; save(); focusQuiz=true; renderQuiz(); renderNav(); return; }
   if(t.dataset.qsubmit!==undefined){ const c=[...document.querySelectorAll('[data-quiz] .opt')].findIndex(x=>x.getAttribute('aria-checked')==='true'); S.quiz.ans[S.quiz.i]=c; save(); showQ(c); return; }
-  if(t.dataset.qnext!==undefined){ if(S.quiz.i===QUIZ.length-1) S.quiz.finished=true; else S.quiz.i++; save(); renderQuiz(); renderNav(); document.getElementById('quiz').scrollIntoView({block:'start'}); return; }
+  if(t.dataset.qnext!==undefined){ if(S.quiz.i===QUIZ.length-1) S.quiz.finished=true; else S.quiz.i++; save(); focusQuiz=true; renderQuiz(); renderNav(); document.getElementById('quiz').scrollIntoView({block:'start'}); return; }
+});
+document.addEventListener('keydown', e=>{
+  const k=e.key; if(!['ArrowDown','ArrowUp','ArrowLeft','ArrowRight','Home','End'].includes(k)) return;
+  const t=e.target, grp=t.closest('[role=radiogroup],[role=tablist]'); if(!grp) return;
+  const items=[...grp.querySelectorAll(t.getAttribute('role')==='tab'?'[role=tab]':'.opt')].filter(x=>!x.disabled); if(!items.length) return;
+  let i=items.indexOf(t); if(i<0) return;
+  i = k==='Home'?0 : k==='End'?items.length-1 : (k==='ArrowDown'||k==='ArrowRight') ? (i+1)%items.length : (i-1+items.length)%items.length;
+  e.preventDefault(); items[i].focus(); items[i].click();
 });
 const menubtn = document.getElementById('menubtn');
 let scrim=null;
-function closeMenu(){ document.body.classList.remove('menu'); menubtn.setAttribute('aria-expanded','false'); if(scrim){scrim.remove(); scrim=null;} }
-menubtn.addEventListener('click',()=>{ if(document.body.classList.contains('menu')) return closeMenu(); document.body.classList.add('menu'); menubtn.setAttribute('aria-expanded','true'); scrim=document.createElement('div'); scrim.className='scrim'; scrim.onclick=closeMenu; document.body.appendChild(scrim); });
+const side = document.getElementById('side'), mainEl = document.querySelector('main'), mq = matchMedia('(max-width:860px)');
+function syncDrawer(){ const open = document.body.classList.contains('menu'); side.inert = mq.matches && !open; document.getElementById('view').inert = mq.matches && open; document.querySelector('.site-foot').inert = mq.matches && open; }
+mq.addEventListener('change', ()=>{ if(!mq.matches) closeMenu(); syncDrawer(); });
+function closeMenu(returnFocus){ const was=document.body.classList.contains('menu'); document.body.classList.remove('menu'); menubtn.setAttribute('aria-expanded','false'); if(scrim){scrim.remove(); scrim=null;} syncDrawer(); if(was && returnFocus) menubtn.focus(); }
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && document.body.classList.contains('menu')) closeMenu(true); });
+menubtn.addEventListener('click',()=>{ if(document.body.classList.contains('menu')) return closeMenu(true); document.body.classList.add('menu'); menubtn.setAttribute('aria-expanded','true'); scrim=document.createElement('div'); scrim.className='scrim'; scrim.onclick=()=>closeMenu(true); document.body.appendChild(scrim); syncDrawer(); (side.querySelector('[aria-current]')||side.querySelector('nav button')).focus(); });
+syncDrawer();
 
 const h = (location.hash||'').slice(1); const hi = LESSONS.findIndex(L=>L.id===h); if(hi>=0) S.cur=hi;
 if(S.cur>=LESSONS.length) S.cur=0;
