@@ -238,7 +238,7 @@ td.m{font-family:var(--mono);font-size:14.5px}
     <div class="topbar"><span id="tbtitle">Locating the Correct Course ID</span><button id="menubtn" aria-controls="side" aria-expanded="false">Lessons</button></div>
     <div id="view" tabindex="-1"></div>
     <footer class="site-foot"><div class="foot-in foot-grid">
-  <nav aria-labelledby="foot-pages"><h2 id="foot-pages" class="foot-h">Pages</h2><ul class="foot-list"><li><a href="../">Home</a></li><li><a href="../course/" aria-current="page">eLearning course</a></li><li><a href="../design-process.html">Design process</a></li><li><a href="../work-samples-note.html">About these samples</a></li><li><a href="../samples/Tucker_ID_Design_Document_Locating_Course_ID.pdf">Design document (PDF)</a></li></ul></nav>
+  <nav aria-labelledby="foot-pages"><h2 id="foot-pages" class="foot-h">Pages</h2><ul class="foot-list"><li><a href="../">Home</a></li><li><a href="../course/" aria-current="page">eLearning course</a></li><li><a href="../job-aid.html">Job aid</a></li><li><a href="../design-process.html">Design process</a></li><li><a href="../work-samples-note.html">About these samples</a></li><li><a href="../samples/Tucker_ID_Design_Document_Locating_Course_ID.pdf">Design document (PDF)</a></li></ul></nav>
   <div><h2 class="foot-h">Contact</h2><p class="foot-contact">Email: <a href="mailto:bailey.c.tucker@gmail.com">bailey.c.tucker@gmail.com</a></p></div>
   <p class="foot-copy">Bailey Tucker · Instructional Design Portfolio</p>
 </div></footer>
@@ -275,6 +275,7 @@ const LESSONS = [
     ['1','School year','Is the work for the current school year or an upcoming one? CIDs can change between years, so a correct CID for 22/23 may be wrong for 23/24.'],
     ['2','Content','Where does the course content come from: company-built, vendor, legacy, or new curriculum? This tells you which family of courses to search.'],
     ['3','Base or linked','Does the project need the base course, a linked school copy, or a state-specific base course? Editing the wrong one changes the wrong students’ course.']]},
+  {t:'note', title:'Keep it handy', html:`The <a href="../job-aid.html">one-page job aid</a> has this checklist plus the search settings from the next topics. Print it or keep it open while you work.`},
   {t:'kc', id:'k1', q:'Which list matches the CID Checklist?', opts:['School year, content, and new course','School year, content, and retired course','School year, content, and base or linked course','Imported, content, and base or linked course'], a:2,
    ok:'The checklist covers school year, content source, and whether you need a base or linked course.', no:'Look at the three cards again. One item is about how a course relates to its copies.'},
  ]},
@@ -431,7 +432,7 @@ function renderQuiz(){
     const score = q.ans.filter((a,i)=>a===QUIZ[i].a).length, pct = Math.round(score/QUIZ.length*100);
     const by = Object.keys(OBJ).map(o=>{ const it = QUIZ.map((x,i)=>[x,i]).filter(([x])=>x.o==o); const c = it.filter(([x,i])=>q.ans[i]===x.a).length; return `<div><span>${o}. ${OBJ[o]}</span><b>${c} / ${it.length}</b></div>`; }).join('');
     box.innerHTML = `<div class="score"><div class="ring" style="--p:${pct}"><b>${pct}%</b></div><h2 tabindex="-1">${pct===100?'Course complete':'Posttest complete'}</h2><p>You answered ${score} of ${QUIZ.length} correctly. ${pct===100?'You met every objective.':'Review the topics below where you missed a question, then retake the test.'}</p><div class="objres">${by}</div><div class="btnrow"><button class="btn ghost" data-qstart>Retake posttest</button></div></div>
-      <div class="note"><b>Keep this checklist</b><div>Before every search: <strong>1.</strong> Which school year? <strong>2.</strong> What content source? <strong>3.</strong> Base course or linked course?</div></div>`;
+      <div class="note"><b>Keep this checklist</b><div>Before every search: <strong>1.</strong> Which school year? <strong>2.</strong> What content source? <strong>3.</strong> Base course or linked course? The <a href="../job-aid.html">one-page job aid</a> has the checklist, the right settings for both tools, and a final check to use on the job.</div></div>`;
     if(focusQuiz){ box.querySelector('h2').focus(); focusQuiz=false; }
     return;
   }

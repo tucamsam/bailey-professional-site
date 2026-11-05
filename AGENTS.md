@@ -8,12 +8,13 @@ A static website hosted on GitHub Pages. There is no build step: every file in t
 | --- | --- |
 | `index.html` | Home page: intro, featured course, links to project materials |
 | `design-process.html` | Write-up: the ADDIE process and adult learning theory behind the samples |
+| `job-aid.html` | One-page job aid (performance support) for the course. The print styles in its `<style>` block lay it out as one US Letter page; the PDF in `samples/` is generated from this page |
 | `work-samples-note.html` | Write-up: why current work is proprietary and how these samples were anonymized |
 | `assets/site.css` | Shared styles for the three pages above (palette and fonts are tokens at the top) |
 | `assets/course-preview.webp` | Screenshot of the course used on the home page |
 | `course/index.html` | The self-paced eLearning course, a single self-contained file (its own CSS and JS) |
 | `course/img/` | Mock-up screenshots used in the course (fictional data) |
-| `samples/` | Downloadable files: the design document PDF and the original PowerPoint prototype |
+| `samples/` | Downloadable files: the design document PDF, the job aid PDF, and the original PowerPoint prototype |
 | `tools/` | Scripts that regenerate the mock-ups and the design document. Not served as pages; only needed to change those files |
 | `.nojekyll` | Tells GitHub Pages to serve files as-is. Keep it |
 
@@ -38,7 +39,7 @@ Answer keys must match what the exhibit images actually show. If you change an a
    - Every image has meaningful `alt` text; any image people need to read data from also gets a text version.
    - Keep the skip links, the `aria-live` feedback areas, the focus moves after lesson changes and quiz steps, the per-lesson page title, and the mobile drawer behavior (hidden from keyboard when closed, Escape closes it).
    - Wide tables sit in a `.tw` wrapper with `tabindex="0"`, `role="region"`, and an `aria-label`.
-   - Every page, including the course, ends with the same footer: a Pages list, then Contact (email). Keep that order and content identical across pages; it satisfies WCAG 2.4.5 (multiple ways) and 3.2.6 (consistent help). Change it in all four files at once.
+   - Every page, including the course, ends with the same footer: a Pages list, then Contact (email). Keep that order and content identical across pages; it satisfies WCAG 2.4.5 (multiple ways) and 3.2.6 (consistent help). Change it in every page at once (`index.html`, `course/index.html`, `job-aid.html`, `design-process.html`, `work-samples-note.html`). The top menu must also match across the site pages (WCAG 3.2.3).
    - Keep the `@media (forced-colors: active)` blocks (in `assets/site.css` and `course/index.html`). They give filled buttons and cards a border in Windows Contrast themes. Any new control drawn only with a background fill needs the same treatment.
    - Headings go in order (h1, then h2, then h3) with no skipped levels.
    - ARIA: every answer group (`role="radiogroup"`) is labelled by its question; tabs use `aria-controls` and panels use `aria-labelledby`; step-through blocks are named groups with an `aria-live` step area; flip cards are named by their title with the back text as their description. Arrow keys move between answers and between tabs. Prefer native HTML over ARIA when adding anything new.
@@ -46,6 +47,10 @@ Answer keys must match what the exhibit images actually show. If you change an a
 4. **Use the shared tokens.** Colors and fonts come from the CSS variables in `assets/site.css` (and the matching block at the top of `course/index.html`). Don't hard-code new colors.
 5. **Write plainly.** First person, as Bailey. Short sentences, active voice, no buzzwords. Don't invent experience, credentials, results, or employers.
 6. **Don't commit originals.** The unredacted 2022 coursework files must never be added to this repo. It's public.
+
+## Rebuilding the job aid PDF
+
+After editing `job-aid.html`, regenerate the PDF so the two match. With a local server running (see below), use headless Chromium with tagging turned on, for example Playwright: `page.pdf(path='samples/Tucker_Job_Aid_Find_the_Correct_Course_ID.pdf', format='Letter', print_background=True, tagged=True, outline=True)`. Check it is still one page.
 
 ## Previewing locally
 

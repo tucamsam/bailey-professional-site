@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Job Aid: Find the Correct Course ID | Bailey Tucker</title>
+<meta name="description" content="A one-page job aid for finding the correct Course ID before alignment or gap-filling work. Performance support for the Locating the Correct Course ID course.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+/* Job aid sheet. Screen: one readable column inside the site. Print/PDF: one US Letter page, two columns. */
+.ja-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:20px}
+.ja-btn{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:700;border-radius:999px;padding:12px 24px;text-decoration:none;min-height:24px}
+.ja-note{color:var(--muted);font-size:16px;margin:0}
+.sheet{border:1px solid var(--line);border-radius:16px;padding:28px;margin-block:8px 64px;display:grid;gap:22px;background:var(--bg)}
+.sheet-top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline;border-bottom:3px solid var(--accent);padding-bottom:12px}
+.sheet-top h2{font-size:28px}
+.sheet-top p{margin:0;color:var(--muted);font-size:16px}
+.cols{columns:2;column-gap:32px}
+.cols > .blk{break-inside:avoid;margin-bottom:22px}
+.cols > .blk:last-child{margin-bottom:0}
+.blk{display:grid;gap:10px;min-width:0}
+.blk h3{font-size:19px;display:flex;gap:10px;align-items:baseline}
+.blk h3 .n{font-family:var(--display);color:var(--accent);font-size:22px;min-width:1.2em}
+.blk p{margin:0}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.checks li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start}
+.checks li::before{content:"";width:18px;height:18px;margin-top:4px;border:2px solid var(--fg);border-radius:4px}
+.checks b{display:block}
+.checks span{color:var(--muted);font-size:16px}
+.tools{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.tool{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--panel)}
+.tool b{display:block;font-family:var(--display)}
+.tool p{font-size:16px}
+.ja-tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.ja-tw table{border-collapse:collapse;width:100%;font-size:15.5px}
+.ja-tw th,.ja-tw td{text-align:left;padding:7px 10px;vertical-align:top;border-top:1px solid var(--line)}
+.ja-tw thead th{background:var(--panel);border-top:0;white-space:nowrap}
+.ja-tw tbody th{font-weight:700}
+.ja-tw td.why{color:var(--muted)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.92em}
+.rule{border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 10px 10px 0;padding:12px 14px}
+.rule p{margin:0}
+.warn{border:2px solid var(--fg);border-radius:10px;padding:12px 14px}
+.warn ul{margin:6px 0 0;padding-left:1.2em;display:grid;gap:4px}
+.sheet-foot{border-top:1px solid var(--line);padding-top:10px;color:var(--muted);font-size:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:820px){.cols{columns:1}.tools{grid-template-columns:minmax(0,1fr)}.sheet{padding:20px}}
+@media (forced-colors: active){.ja-btn{border:2px solid ButtonText}.rule{border:2px solid CanvasText}}
+
+/* Print and PDF: light palette, one page */
+@page{size:letter;margin:0.45in}
+@media print{
+  :root{--bg:#ffffff;--panel:#f6f5f9;--line:#d4d0de;--fg:#1d1a26;--muted:#4f4a5e;--accent:#5b4a8b;--accent-ink:#ffffff;--accent-soft:#ece8f5;color-scheme:light}
+  html{padding:0}
+  body{font-size:10.5pt;line-height:1.38;background:#fff}
+  .skip,.top,.page-head,.ja-actions,.site-foot{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .sheet{border:0;padding:0;margin:0;gap:10pt;border-radius:0}
+  .sheet-top h2{font-size:19pt}
+  .sheet-top p{font-size:9.5pt}
+  .cols{columns:2;column-gap:18pt}
+  .cols > .blk{margin-bottom:9pt}
+  .tools{grid-template-columns:1fr 1fr}
+  .blk{gap:5pt;break-inside:avoid}
+  .blk h3{font-size:12pt}
+  .blk h3 .n{font-size:13pt}
+  .checks{gap:4pt}
+  .checks span,.tool p{font-size:9.5pt}
+  .checks li::before{width:11pt;height:11pt;margin-top:1pt}
+  .ja-tw{overflow:visible}
+  .ja-tw table{font-size:9pt}
+  .ja-tw th,.ja-tw td{padding:3pt 6pt}
+  .tool,.rule,.warn{padding:6pt 8pt}
+  .warn ul{gap:1pt}
+  .sheet-foot{font-size:8.5pt;padding-top:6pt}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="top"><div class="wrap"><a class="name" href="./">Bailey Tucker</a><nav aria-label="Site">
+<a href="course/">Course</a>
+<a href="job-aid.html" aria-current="page">Job aid</a>
+<a href="design-process.html">Design process</a>
+<a href="work-samples-note.html">About these samples</a>
+</nav></div></header>
+<main id="main" tabindex="-1">
+<div class="wrap narrow page-head">
+  <small>Job aid</small>
+  <h1>Find the Correct Course ID</h1>
+  <p>A one-page reference learners keep beside the course system after finishing the <a href="course/">Locating the Correct Course ID</a> course. It turns the course's checklist and settings into something to use on the job.</p>
+  <div class="ja-actions">
+    <a class="ja-btn" href="samples/Tucker_Job_Aid_Find_the_Correct_Course_ID.pdf">Download the printable PDF</a>
+    <p class="ja-note">One page, US Letter, tagged for screen readers.</p>
+  </div>
+</div>
+
+<div class="wrap narrow">
+<article class="sheet" aria-labelledby="ja-title">
+  <div class="sheet-top">
+    <h2 id="ja-title">Find the Correct Course ID (CID)</h2>
+    <p>Use before every alignment or gap-filling project</p>
+  </div>
+
+  <div class="cols">
+    <section class="blk" aria-labelledby="s1">
+      <h3 id="s1"><span class="n" aria-hidden="true">1</span>Answer three questions first</h3>
+      <ul class="checks">
+        <li><div><b>Which school year?</b><span>Current or upcoming. CIDs can change from one year to the next.</span></div></li>
+        <li><div><b>What content source?</b><span>Company-built, vendor, legacy, or new curriculum.</span></div></li>
+        <li><div><b>Base or linked course?</b><span>The base course, a linked school copy, or a state-specific base course.</span></div></li>
+      </ul>
+    </section>
+
+    <section class="blk" aria-labelledby="s2">
+      <h3 id="s2"><span class="n" aria-hidden="true">2</span>Pick the right tool</h3>
+      <div class="tools">
+        <div class="tool"><b>Course Manager</b><p>Finding one course or a few. Fastest for a single lookup.</p></div>
+        <div class="tool"><b>Course Metadata Report</b><p>Comparing many courses or locations at once in a spreadsheet.</p></div>
+      </div>
+    </section>
+
+    <section class="blk" aria-labelledby="s3">
+      <h3 id="s3"><span class="n" aria-hidden="true">3</span>Course Manager settings</h3>
+      <div class="ja-tw" tabindex="0" role="region" aria-label="Table: Course Manager fields and values">
+        <table>
+          <thead><tr><th scope="col">Field</th><th scope="col">Set to</th><th scope="col">Why</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Search Text</th><td>All or part of the course name</td><td class="why">Works like any search bar</td></tr>
+            <tr><th scope="row">Curriculum</th><td>Any</td><td class="why">Narrowing can hide the course you need</td></tr>
+            <tr><th scope="row">Subject Area</th><td>Any</td><td class="why">Courses may be tagged unexpectedly</td></tr>
+            <tr><th scope="row">School Year</th><td>Year from step 1</td><td class="why">CIDs change between years</td></tr>
+            <tr><th scope="row">Include Linked</th><td>Checked</td><td class="why">Shows school copies with their base</td></tr>
+            <tr><th scope="row">Managed At</th><td>Organization root</td><td class="why">Anything else searches the wrong catalog</td></tr>
+            <tr><th scope="row">Available At</th><td>Any location, or the school</td><td class="why">Courses are tagged to schools, not states</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="blk" aria-labelledby="s4">
+      <h3 id="s4"><span class="n" aria-hidden="true">4</span>Course Metadata Report settings</h3>
+      <div class="ja-tw" tabindex="0" role="region" aria-label="Table: Course Metadata Report fields and values">
+        <table>
+          <thead><tr><th scope="col">Field</th><th scope="col">Set to</th><th scope="col">Why</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">School Year(s)</th><td>Every year you need</td><td class="why">Compare years side by side</td></tr>
+            <tr><th scope="row">Output Type</th><td>Excel</td><td class="why">Inline adds data you don't need</td></tr>
+            <tr><th scope="row">Managed At</th><td>Organization root</td><td class="why">The report won't run otherwise</td></tr>
+            <tr><th scope="row">Available At</th><td>Any location, or specific schools</td><td class="why">Specific schools make a smaller file</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Then select <b>Generate Report</b>, turn on filters, and narrow by location, school year, subject, and grade.</p>
+    </section>
+
+    <section class="blk" aria-labelledby="s5">
+      <h3 id="s5"><span class="n" aria-hidden="true">5</span>Tell base from linked</h3>
+      <div class="rule"><p>Check the <b>Base Course ID</b> column. <b>Blank</b> means a base course. <b>A CID</b> means a linked copy of that base course.</p></div>
+      <div class="ja-tw" tabindex="0" role="region" aria-label="Example: base and linked courses">
+        <table>
+          <thead><tr><th scope="col">CID</th><th scope="col">Name</th><th scope="col">Base Course ID</th><th scope="col">Result</th></tr></thead>
+          <tbody>
+            <tr><th scope="row" class="mono">789</th><td>Essential Math 6 A</td><td><span aria-hidden="true">(blank)</span><span class="sr">blank</span></td><td>Base course</td></tr>
+            <tr><th scope="row" class="mono">345</th><td>Connected Math 6 A</td><td class="mono">789</td><td>Linked to 789</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="blk" aria-labelledby="s6">
+      <h3 id="s6"><span class="n" aria-hidden="true">6</span>Check before you start work</h3>
+      <ul class="checks">
+        <li><div><b>School year matches the project</b></div></li>
+        <li><div><b>Course name and school or state match</b></div></li>
+        <li><div><b>Base or linked matches what the project needs</b></div></li>
+      </ul>
+      <div class="warn"><b>Common mistakes</b>
+        <ul>
+          <li>Taking the first search result without checking it</li>
+          <li>Narrowing Curriculum or Subject Area</li>
+          <li>Leaving Managed At on anything but the organization root</li>
+          <li>Searching by state when courses are tagged to schools</li>
+        </ul>
+      </div>
+      <p><b>Still not sure?</b> Ask before you edit. A wrong CID can change a live course students are using.</p>
+    </section>
+  </div>
+
+  <div class="sheet-foot"><span>Job aid for the course <i>Locating the Correct Course ID</i></span><span>Portfolio sample by Bailey Tucker. System names and data are fictional.</span></div>
+</article>
+</div>
+</main>
+<footer class="site-foot"><div class="wrap foot-grid">
+  <nav aria-labelledby="foot-pages"><h2 id="foot-pages" class="foot-h">Pages</h2><ul class="foot-list"><li><a href="./">Home</a></li><li><a href="course/">eLearning course</a></li><li><a href="job-aid.html" aria-current="page">Job aid</a></li><li><a href="design-process.html">Design process</a></li><li><a href="work-samples-note.html">About these samples</a></li><li><a href="samples/Tucker_ID_Design_Document_Locating_Course_ID.pdf">Design document (PDF)</a></li></ul></nav>
+  <div><h2 class="foot-h">Contact</h2><p class="foot-contact">Email: <a href="mailto:bailey.c.tucker@gmail.com">bailey.c.tucker@gmail.com</a></p></div>
+  <p class="foot-copy">Bailey Tucker · Instructional Design Portfolio</p>
+</div></footer>
+</body>
+</html>
